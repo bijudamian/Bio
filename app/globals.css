@@ -1,0 +1,262 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Quantum Professional Theme Variables */
+:root {
+  /* Quantum Dark Palette */
+  --quantum-dark: #0a0a0f;
+  --quantum-darker: #050508;
+  --quantum-card: #111118;
+  --quantum-border: #1a1a24;
+
+  /* Quantum Light Palette */
+  --quantum-light: #e8e8f0;
+  --quantum-muted: #a0a0b0;
+  --quantum-subtle: #70707d;
+
+  /* Quantum Accent Colors */
+  --quantum-primary: #00d4ff;
+  --quantum-secondary: #7c3aed;
+  --quantum-accent: #10b981;
+  --quantum-warning: #f59e0b;
+  --quantum-danger: #ef4444;
+
+  /* Quantum Gradients */
+  --quantum-gradient-primary: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+  --quantum-gradient-secondary: linear-gradient(135deg, #10b981 0%, #00d4ff 100%);
+  --quantum-gradient-accent: linear-gradient(135deg, #7c3aed 0%, #10b981 100%);
+
+  /* Original shadcn variables for compatibility */
+  --background: var(--quantum-dark);
+  --foreground: var(--quantum-light);
+  --card: var(--quantum-card);
+  --card-foreground: var(--quantum-light);
+  --popover: var(--quantum-card);
+  --popover-foreground: var(--quantum-light);
+  --primary: var(--quantum-primary);
+  --primary-foreground: var(--quantum-dark);
+  --secondary: var(--quantum-card);
+  --secondary-foreground: var(--quantum-light);
+  --muted: var(--quantum-card);
+  --muted-foreground: var(--quantum-muted);
+  --accent: var(--quantum-card);
+  --accent-foreground: var(--quantum-light);
+  --destructive: var(--quantum-danger);
+  --destructive-foreground: var(--quantum-light);
+  --border: var(--quantum-border);
+  --input: var(--quantum-border);
+  --ring: var(--quantum-primary);
+  --chart-1: var(--quantum-primary);
+  --chart-2: var(--quantum-secondary);
+  --chart-3: var(--quantum-accent);
+  --chart-4: var(--quantum-warning);
+  --chart-5: var(--quantum-danger);
+  --radius: 0.75rem;
+  --sidebar: #e8e8f0;
+  --sidebar-foreground: #0a0a0f;
+  --sidebar-primary: #00d4ff;
+  --sidebar-primary-foreground: #0a0a0f;
+  --sidebar-accent: #10b981;
+  --sidebar-accent-foreground: #0a0a0f;
+  --sidebar-border: #1a1a24;
+  --sidebar-ring: #00d4ff;
+}
+
+.dark {
+  --background: #0a0a0f;
+  --foreground: #e8e8f0;
+  --card: #111118;
+  --card-foreground: #e8e8f0;
+  --popover: #111118;
+  --popover-foreground: #e8e8f0;
+  --primary: #e8e8f0;
+  --primary-foreground: #0a0a0f;
+  --secondary: #1a1a24;
+  --secondary-foreground: #e8e8f0;
+  --muted: #1a1a24;
+  --muted-foreground: #a0a0b0;
+  --accent: #1a1a24;
+  --accent-foreground: #e8e8f0;
+  --destructive: #ef4444;
+  --destructive-foreground: #f59e0b;
+  --border: #1a1a24;
+  --input: #1a1a24;
+  --ring: #00d4ff;
+  --chart-1: #00d4ff;
+  --chart-2: #7c3aed;
+  --chart-3: #10b981;
+  --chart-4: #f59e0b;
+  --chart-5: #ef4444;
+  --radius: 0.75rem;
+  --sidebar: #0a0a0f;
+  --sidebar-foreground: #e8e8f0;
+  --sidebar-primary: #00d4ff;
+  --sidebar-primary-foreground: #e8e8f0;
+  --sidebar-accent: #10b981;
+  --sidebar-accent-foreground: #e8e8f0;
+  --sidebar-border: #1a1a24;
+  --sidebar-ring: #00d4ff;
+}
+
+@theme inline {
+  /* Quantum Color System */
+  --color-quantum-dark: var(--quantum-dark);
+  --color-quantum-darker: var(--quantum-darker);
+  --color-quantum-card: var(--quantum-card);
+  --color-quantum-border: var(--quantum-border);
+  --color-quantum-light: var(--quantum-light);
+  --color-quantum-muted: var(--quantum-muted);
+  --color-quantum-subtle: var(--quantum-subtle);
+  --color-quantum-primary: var(--quantum-primary);
+  --color-quantum-secondary: var(--quantum-secondary);
+  --color-quantum-accent: var(--quantum-accent);
+  --color-quantum-warning: var(--quantum-warning);
+  --color-quantum-danger: var(--quantum-danger);
+
+  /* Font System */
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+
+  /* Original shadcn compatibility */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* Quantum Professional Base Styles */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    background-image: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+  }
+
+  /* Quantum Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-quantum-darker;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-quantum-primary/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-quantum-primary/50;
+  }
+
+  /* Quantum Selection */
+  ::selection {
+    @apply bg-quantum-primary/20 text-quantum-light;
+  }
+}
+
+/* Quantum Animation Utilities */
+@layer utilities {
+  .quantum-glow {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+
+  .quantum-glow-secondary {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+  }
+
+  .quantum-glow-accent {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+  }
+
+  .quantum-gradient-text {
+    background: var(--quantum-gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .quantum-border-gradient {
+    border-image: var(--quantum-gradient-primary) 1;
+  }
+
+  @keyframes quantum-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes quantum-float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes quantum-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-quantum-pulse {
+    animation: quantum-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-quantum-float {
+    animation: quantum-float 3s ease-in-out infinite;
+  }
+
+  .animate-quantum-rotate {
+    animation: quantum-rotate 20s linear infinite;
+  }
+}
