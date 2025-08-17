@@ -48,7 +48,9 @@ export function CtfChallengeModal({ onClose }: CtfChallengeModalProps) {
             Submit
           </Button>
         </div>
-        {feedback && <p className={`mt-4 ${feedback.includes("Granted") ? "text-green-400" : "text-red-400"}`}>{feedback}</p>}
+        {feedback && (
+          <p className={`mt-4 ${feedback.includes("Granted") ? "text-green-400" : "text-red-400"}`}>{feedback}</p>
+        )}
         <Button onClick={onClose} variant="ghost" className="absolute top-4 right-4">
           Close
         </Button>

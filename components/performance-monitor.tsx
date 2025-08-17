@@ -12,6 +12,14 @@ interface PerformanceMetrics {
   fid: number
 }
 
+interface LayoutShiftEntry extends PerformanceEntry {
+  value: number
+}
+
+interface FirstInputEntry extends PerformanceEntry {
+  processingStart: number
+}
+
 export function PerformanceMonitor() {
   const [metrics, setMetrics] = useState<PerformanceMetrics | null>(null)
   const [isVisible, setIsVisible] = useState(false)
@@ -30,10 +38,10 @@ export function PerformanceMonitor() {
           newMetrics.lcp = entry.startTime
         }
         if (entry.entryType === "layout-shift") {
-          newMetrics.cls = (newMetrics.cls || 0) + (entry as any).value
+          newMetrics.cls = (newMetrics.cls || 0) + (entry as LayoutShiftEntry).value
         }
         if (entry.entryType === "first-input") {
-          newMetrics.fid = (entry as any).processingStart - entry.startTime
+          newMetrics.fid = (entry as FirstInputEntry).processingStart - entry.startTime
         }
       })
 

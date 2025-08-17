@@ -34,7 +34,7 @@ export function LoadingScreen() {
           <div className="w-24 h-24 rounded-full bg-gradient-to-br from-quantum-primary via-quantum-secondary to-quantum-accent p-1 animate-quantum-rotate">
             <div className="w-full h-full rounded-full bg-quantum-dark flex items-center justify-center">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-quantum-primary/20 to-quantum-secondary/20 flex items-center justify-center">
-                <span className="text-2xl font-bold quantum-gradient-text">BD</span>
+                <span className="text-2xl font-bold quantum-gradient-text">Q</span>
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@ export function LoadingScreen() {
 
         {/* Loading Text */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold quantum-gradient-text">Initializing Portfolio</h2>
+          <h2 className="text-2xl font-bold quantum-gradient-text">Initializing Quantum Portfolio</h2>
           <p className="text-quantum-muted">Preparing an extraordinary experience...</p>
         </div>
 

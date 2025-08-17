@@ -27,20 +27,18 @@ interface Project {
 
 export function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState("all")
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-
   const projects: Project[] = [
     {
-      id: "analytics-dashboard",
-      title: "Analytics Dashboard",
-      description: "Real-time analytics platform with modern visualizations and AI-powered insights.",
+      id: "quantum-dashboard",
+      title: "Quantum Analytics Dashboard",
+      description: "Real-time analytics platform with quantum-inspired visualizations and AI-powered insights.",
       longDescription:
-        "A comprehensive analytics dashboard built with Next.js and TypeScript, featuring real-time data visualization, modern UI components, and AI-powered insights. Includes advanced filtering, custom chart components, and responsive design optimized for all devices.",
+        "A comprehensive analytics dashboard built with Next.js and TypeScript, featuring real-time data visualization, quantum-inspired UI components, and AI-powered insights. Includes advanced filtering, custom chart components, and responsive design optimized for all devices.",
       image: "/placeholder.svg?height=400&width=600",
       category: "web-app",
       technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Chart.js", "PostgreSQL", "Prisma"],
-      liveUrl: "https://dashboard.demo",
-      githubUrl: "https://github.com/user/dashboard",
+      liveUrl: "https://quantum-dashboard.demo",
+      githubUrl: "https://github.com/user/quantum-dashboard",
       featured: true,
       stats: { stars: 234, forks: 45, views: 1200 },
       status: "completed",
@@ -48,7 +46,7 @@ export function ProjectsSection() {
     {
       id: "ai-content-generator",
       title: "AI Content Generator",
-      description: "Intelligent content creation platform powered by advanced language models.",
+      description: "Intelligent content creation platform powered by advanced language models and quantum algorithms.",
       longDescription:
         "An AI-powered content generation platform that leverages GPT models and custom algorithms to create high-quality content. Features include template management, content optimization, SEO analysis, and collaborative editing capabilities.",
       image: "/placeholder.svg?height=400&width=600",
@@ -62,15 +60,15 @@ export function ProjectsSection() {
     },
     {
       id: "mobile-fitness-app",
-      title: "Fitness Tracker",
-      description: "Cross-platform mobile app for fitness tracking with gamification elements.",
+      title: "Quantum Fitness Tracker",
+      description: "Cross-platform mobile app for fitness tracking with quantum-inspired gamification elements.",
       longDescription:
-        "A comprehensive fitness tracking application built with React Native, featuring workout planning, progress tracking, social challenges, and gamification. Includes wearable device integration and AI-powered workout recommendations.",
+        "A comprehensive fitness tracking application built with React Native, featuring workout planning, progress tracking, social challenges, and quantum-inspired gamification. Includes wearable device integration and AI-powered workout recommendations.",
       image: "/placeholder.svg?height=400&width=600",
       category: "mobile",
       technologies: ["React Native", "Expo", "Firebase", "TypeScript", "Redux Toolkit"],
-      liveUrl: "https://apps.apple.com/fitness-app",
-      githubUrl: "https://github.com/user/fitness-app",
+      liveUrl: "https://apps.apple.com/quantum-fitness",
+      githubUrl: "https://github.com/user/quantum-fitness",
       featured: false,
       stats: { stars: 156, forks: 28, views: 670 },
       status: "completed",
@@ -78,29 +76,29 @@ export function ProjectsSection() {
     {
       id: "blockchain-portfolio",
       title: "DeFi Portfolio Manager",
-      description: "Decentralized finance portfolio management with advanced security protocols.",
+      description: "Decentralized finance portfolio management with quantum security protocols.",
       longDescription:
-        "A sophisticated DeFi portfolio management platform built on Ethereum, featuring automated yield farming, risk assessment, secured transactions, and comprehensive analytics. Supports multiple DeFi protocols and provides advanced trading strategies.",
+        "A sophisticated DeFi portfolio management platform built on Ethereum, featuring automated yield farming, risk assessment, quantum-secured transactions, and comprehensive analytics. Supports multiple DeFi protocols and provides advanced trading strategies.",
       image: "/placeholder.svg?height=400&width=600",
       category: "blockchain",
       technologies: ["Solidity", "Web3.js", "React", "Hardhat", "IPFS", "MetaMask"],
-      liveUrl: "https://defi-portfolio.demo",
+      liveUrl: "https://defi-quantum.demo",
       githubUrl: "https://github.com/user/defi-portfolio",
       featured: true,
       stats: { stars: 312, forks: 67, views: 1450 },
       status: "in-progress",
     },
     {
-      id: "ecommerce-platform",
-      title: "E-commerce Platform",
-      description: "Next-generation e-commerce platform with AI recommendations and modern UX.",
+      id: "quantum-ecommerce",
+      title: "Quantum E-commerce Platform",
+      description: "Next-generation e-commerce platform with AI recommendations and quantum-inspired UX.",
       longDescription:
-        "A full-stack e-commerce platform featuring AI-powered product recommendations, modern user interface, advanced search capabilities, and seamless payment integration. Built with modern technologies for optimal performance and scalability.",
+        "A full-stack e-commerce platform featuring AI-powered product recommendations, quantum-inspired user interface, advanced search capabilities, and seamless payment integration. Built with modern technologies for optimal performance and scalability.",
       image: "/placeholder.svg?height=400&width=600",
       category: "web-app",
       technologies: ["Next.js", "Stripe", "Supabase", "Tailwind CSS", "Vercel", "TypeScript"],
-      liveUrl: "https://shop.demo",
-      githubUrl: "https://github.com/user/ecommerce-platform",
+      liveUrl: "https://quantum-shop.demo",
+      githubUrl: "https://github.com/user/quantum-ecommerce",
       featured: false,
       stats: { stars: 198, forks: 41, views: 920 },
       status: "completed",
@@ -110,7 +108,7 @@ export function ProjectsSection() {
       title: "Neural Network Visualizer",
       description: "Interactive visualization tool for understanding neural network architectures and training.",
       longDescription:
-        "An educational tool for visualizing neural network architectures, training processes, and decision boundaries. Features interactive network building, real-time training visualization, and modern animation effects for enhanced learning experience.",
+        "An educational tool for visualizing neural network architectures, training processes, and decision boundaries. Features interactive network building, real-time training visualization, and quantum-inspired animation effects for enhanced learning experience.",
       image: "/placeholder.svg?height=400&width=600",
       category: "ai-ml",
       technologies: ["Python", "TensorFlow", "D3.js", "Flask", "WebGL", "NumPy"],
@@ -180,13 +178,11 @@ export function ProjectsSection() {
               <Card
                 key={project.id}
                 className="group bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:quantum-glow overflow-hidden cursor-pointer"
-                onClick={() => setSelectedProject(project)}
               >
                 <div className="relative">
-                  <img
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  <div
+                    className="w-full h-48 bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
+                    style={{ backgroundImage: `url(${project.image || "/placeholder.svg"})` }}
                   />
                   <div className="absolute top-4 left-4">
                     <Badge className={`${getStatusColor(project.status)} text-xs font-medium`}>
@@ -282,13 +278,11 @@ export function ProjectsSection() {
             <Card
               key={project.id}
               className="group bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:quantum-glow overflow-hidden cursor-pointer"
-              onClick={() => setSelectedProject(project)}
             >
               <div className="relative">
-                <img
-                  src={project.image || "/placeholder.svg"}
-                  alt={project.title}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                <div
+                  className="w-full h-48 bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
+                  style={{ backgroundImage: `url(${project.image || "/placeholder.svg"})` }}
                 />
                 <div className="absolute top-4 left-4">
                   <Badge className={`${getStatusColor(project.status)} text-xs font-medium`}>

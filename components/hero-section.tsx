@@ -214,7 +214,7 @@ export function HeroSection() {
   }
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Enhanced Canvas with ChatGPT-inspired effects */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0" style={{ background: "transparent" }} />
 
@@ -247,7 +247,7 @@ export function HeroSection() {
               <div className="w-32 h-32 rounded-full bg-gradient-to-br from-quantum-primary via-quantum-secondary to-quantum-accent p-1 animate-quantum-rotate">
                 <div className="w-full h-full rounded-full bg-quantum-dark flex items-center justify-center">
                   <div className="w-24 h-24 rounded-full bg-gradient-to-br from-quantum-primary/20 to-quantum-secondary/20 flex items-center justify-center">
-                    <span className="text-2xl font-bold quantum-gradient-text">BD</span>
+                    <span className="text-2xl font-bold quantum-gradient-text">QP</span>
                   </div>
                 </div>
               </div>
@@ -274,7 +274,7 @@ export function HeroSection() {
           {/* Description with visualization type indicator */}
           <p className="text-lg md:text-xl text-quantum-muted max-w-3xl mx-auto leading-relaxed">
             Crafting exceptional digital experiences with cutting-edge technology. Specializing in full-stack
-            development, modern design, and innovative solutions that push the boundaries of what's possible.
+            development, quantum-inspired design, and innovative solutions that push the boundaries of what's possible.
             <span className="block text-sm mt-2 opacity-60">
               Current visualization:{" "}
               {visualizationType === "neural"

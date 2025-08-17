@@ -51,7 +51,7 @@ export function AboutSection() {
             <span className="quantum-gradient-text">About Me</span>
           </h2>
           <p className="text-xl text-quantum-muted max-w-3xl mx-auto">
-            Passionate developer with a creative mindset, dedicated to creating innovative solutions that make a
+            Passionate developer with a quantum mindset, dedicated to creating innovative solutions that make a
             difference.
           </p>
         </div>
@@ -62,7 +62,7 @@ export function AboutSection() {
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold text-quantum-light">Building the Future, One Line at a Time</h3>
               <p className="text-quantum-muted leading-relaxed">
-                With over 5 years of experience in full-stack development, I specialize in creating modern
+                With over 5 years of experience in full-stack development, I specialize in creating quantum-inspired
                 digital experiences that push the boundaries of what's possible. My approach combines technical
                 excellence with creative problem-solving to deliver solutions that truly matter.
               </p>
