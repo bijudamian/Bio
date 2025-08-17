@@ -95,7 +95,7 @@ export function Navigation() {
           {/* Logo with Online Status */}
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-br from-quantum-primary to-quantum-secondary rounded-lg quantum-glow"></div>
-            <span className="text-xl font-bold quantum-gradient-text">Quantum</span>
+            <span className="text-xl font-bold quantum-gradient-text">Biju Damian </span>
             <button
               onClick={handlePing}
               className="flex items-center space-x-2 px-3 py-1 rounded-full bg-quantum-card/50 border border-quantum-border hover:border-quantum-primary transition-all duration-200 group"
