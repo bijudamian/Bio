@@ -247,7 +247,7 @@ export function HeroSection() {
               <div className="w-32 h-32 rounded-full bg-gradient-to-br from-quantum-primary via-quantum-secondary to-quantum-accent p-1 animate-quantum-rotate">
                 <div className="w-full h-full rounded-full bg-quantum-dark flex items-center justify-center">
                   <div className="w-24 h-24 rounded-full bg-gradient-to-br from-quantum-primary/20 to-quantum-secondary/20 flex items-center justify-center">
-                    <span className="text-2xl font-bold quantum-gradient-text">QP</span>
+                    <span className="text-2xl font-bold quantum-gradient-text">BD</span>
                   </div>
                 </div>
               </div>
