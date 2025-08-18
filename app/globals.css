@@ -259,4 +259,121 @@
   .animate-quantum-rotate {
     animation: quantum-rotate 20s linear infinite;
   }
+
+  /* Mobile-First Responsive Utilities */
+  /* Touch-friendly minimum sizes */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Mobile-optimized text sizes */
+  .text-mobile-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  .text-mobile-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  .text-mobile-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  .text-mobile-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+  .text-mobile-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  /* Mobile-first spacing */
+  .space-mobile-tight > * + * {
+    margin-top: 0.5rem;
+  }
+  .space-mobile-normal > * + * {
+    margin-top: 1rem;
+  }
+  .space-mobile-loose > * + * {
+    margin-top: 1.5rem;
+  }
+
+  /* Performance optimizations for mobile */
+  @media (max-width: 768px) {
+    .reduce-motion {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    .reduce-blur {
+      backdrop-filter: none !important;
+      filter: none !important;
+    }
+  }
+
+  /* Mobile-specific quantum effects */
+  @media (max-width: 768px) {
+    .quantum-glow {
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+    }
+
+    .quantum-glow-secondary {
+      box-shadow: 0 0 10px rgba(124, 58, 237, 0.2);
+    }
+
+    .quantum-glow-accent {
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+    }
+  }
+}
+
+/* Mobile-First Media Queries */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Reduce animations on mobile for performance */
+  .animate-quantum-pulse {
+    animation-duration: 3s;
+  }
+
+  .animate-quantum-float {
+    animation-duration: 4s;
+  }
+
+  .animate-quantum-rotate {
+    animation-duration: 30s;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .quantum-gradient-text {
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+    color: var(--quantum-primary);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-quantum-pulse,
+  .animate-quantum-float,
+  .animate-quantum-rotate,
+  .animate-bounce {
+    animation: none;
+  }
+
+  .transition-all {
+    transition: none;
+  }
 }
