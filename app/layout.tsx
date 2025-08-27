@@ -16,22 +16,22 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Quantum Portfolio | Professional Developer",
+  title: "Biju Damian: Engineering Digital Realities",
   description: "Ultimate portfolio showcasing cutting-edge development skills with quantum professional design",
   generator: "v0.app",
   keywords: ["portfolio", "developer", "quantum", "professional", "web development"],
-  authors: [{ name: "Developer" }],
+  authors: [{ name: "Biju Damian" }],
   viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
   openGraph: {
-    title: "Quantum Portfolio | Professional Developer",
+    title: "Biju Damian: Engineering Digital Realities",
     description: "Ultimate portfolio showcasing cutting-edge development skills",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Quantum Portfolio | Professional Developer",
+    title: "Biju Damian: Engineering Digital Realities",
     description: "Ultimate portfolio showcasing cutting-edge development skills",
   },
 }
