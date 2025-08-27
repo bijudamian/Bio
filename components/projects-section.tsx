@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -28,6 +28,12 @@ interface Project {
 
 export function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState("all")
+  const [displayedProjects, setDisplayedProjects] = useState<Project[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
+  const PROJECTS_PER_PAGE = 3
+
   const projects: Project[] = [
     {
       id: "quantum-dashboard",
@@ -158,6 +164,52 @@ export function ProjectsSection() {
     }
   }
 
+  const loadMoreProjects = useCallback(() => {
+    if (isLoading || !hasMore) return
+
+    setIsLoading(true)
+
+    // Simulate API delay
+    setTimeout(() => {
+      const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE
+      const endIndex = startIndex + PROJECTS_PER_PAGE
+      const newProjects = filteredProjects.slice(startIndex, endIndex)
+
+      if (newProjects.length === 0) {
+        setHasMore(false)
+      } else {
+        setDisplayedProjects((prev) => [...prev, ...newProjects])
+        setCurrentPage((prev) => prev + 1)
+      }
+
+      setIsLoading(false)
+    }, 500)
+  }, [currentPage, filteredProjects, isLoading, hasMore])
+
+  useEffect(() => {
+    setDisplayedProjects(filteredProjects.slice(0, PROJECTS_PER_PAGE))
+    setCurrentPage(2)
+    setHasMore(filteredProjects.length > PROJECTS_PER_PAGE)
+  }, [activeCategory, filteredProjects])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !isLoading) {
+          loadMoreProjects()
+        }
+      },
+      { threshold: 0.1 },
+    )
+
+    const loadMoreTrigger = document.getElementById("load-more-trigger")
+    if (loadMoreTrigger) {
+      observer.observe(loadMoreTrigger)
+    }
+
+    return () => observer.disconnect()
+  }, [loadMoreProjects, hasMore, isLoading])
+
   return (
     <section id="projects" className="py-20 px-6">
       <div className="max-w-7xl mx-auto">
@@ -280,7 +332,7 @@ export function ProjectsSection() {
 
         {/* All Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project) => (
+          {displayedProjects.map((project) => (
             <Card
               key={project.id}
               className="group bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:quantum-glow overflow-hidden cursor-pointer"
@@ -359,6 +411,25 @@ export function ProjectsSection() {
             </Card>
           ))}
         </div>
+
+        {hasMore && (
+          <div id="load-more-trigger" className="flex justify-center mt-12">
+            {isLoading ? (
+              <div className="flex items-center space-x-2 text-quantum-muted">
+                <div className="w-6 h-6 border-2 border-quantum-primary border-t-transparent rounded-full animate-spin"></div>
+                <span>Loading more projects...</span>
+              </div>
+            ) : (
+              <Button
+                onClick={loadMoreProjects}
+                variant="outline"
+                className="border-quantum-border hover:border-quantum-primary text-quantum-muted hover:text-quantum-primary bg-transparent"
+              >
+                Load More Projects
+              </Button>
+            )}
+          </div>
+        )}
 
         {/* Project Stats */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-6">

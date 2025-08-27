@@ -62,6 +62,8 @@
   --sidebar-accent-foreground: #0a0a0f;
   --sidebar-border: #1a1a24;
   --sidebar-ring: #00d4ff;
+  /* Added base font size variable for accessibility panel */
+  --base-font-size: 16px;
 }
 
 .dark {
@@ -166,6 +168,8 @@
 
   body {
     @apply bg-background text-foreground font-sans;
+    /* Added responsive font size based on accessibility settings */
+    font-size: var(--base-font-size);
     background-image: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
@@ -194,8 +198,66 @@
   }
 }
 
-/* Quantum Animation Utilities */
+/* Accessibility Enhancements */
 @layer utilities {
+  /* High Contrast Mode */
+  .high-contrast {
+    --quantum-dark: #000000;
+    --quantum-card: #1a1a1a;
+    --quantum-border: #ffffff;
+    --quantum-light: #ffffff;
+    --quantum-muted: #cccccc;
+    --quantum-primary: #00ffff;
+    --quantum-secondary: #ff00ff;
+    --quantum-accent: #00ff00;
+  }
+
+  .high-contrast * {
+    border-color: var(--quantum-border) !important;
+    outline: 2px solid transparent;
+  }
+
+  .high-contrast *:focus {
+    outline: 3px solid var(--quantum-primary) !important;
+    outline-offset: 2px;
+  }
+
+  /* Reduced Motion */
+  .reduce-motion *,
+  .reduce-motion *::before,
+  .reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reduce-motion .animate-quantum-pulse,
+  .reduce-motion .animate-quantum-float,
+  .reduce-motion .animate-quantum-rotate {
+    animation: none !important;
+  }
+
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Enhanced Focus Indicators */
+  .focus-visible:focus-visible {
+    outline: 3px solid var(--quantum-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Quantum Animation Utilities */
   .quantum-glow {
     box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
   }

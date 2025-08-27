@@ -88,6 +88,13 @@ export function ContactSection() {
       description: "Available Mon-Fri, 9AM-6PM IST",
     },
     {
+      icon: MessageCircle,
+      label: "WhatsApp",
+      value: "+91 8790882114",
+      href: "https://wa.me/918790882114?text=Hi%20Biju!%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect.",
+      description: "Quick chat on WhatsApp",
+    },
+    {
       icon: MapPin,
       label: "Location",
       value: "India",
