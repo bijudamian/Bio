@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -135,7 +135,10 @@ export function ProjectsSection() {
     { id: "blockchain", label: "Blockchain", count: projects.filter((p) => p.category === "blockchain").length },
   ]
 
-  const filteredProjects = activeCategory === "all" ? projects : projects.filter((p) => p.category === activeCategory)
+  const filteredProjects = useMemo(() => {
+    return activeCategory === "all" ? projects : projects.filter((p) => p.category === activeCategory)
+  }, [activeCategory])
+
   const featuredProjects = projects.filter((p) => p.featured)
 
   const getStatusColor = (status: Project["status"]) => {
@@ -187,20 +190,23 @@ export function ProjectsSection() {
   }, [currentPage, filteredProjects, isLoading, hasMore])
 
   useEffect(() => {
-    setDisplayedProjects(filteredProjects.slice(0, PROJECTS_PER_PAGE))
+    const initialProjects = filteredProjects.slice(0, PROJECTS_PER_PAGE)
+    setDisplayedProjects(initialProjects)
     setCurrentPage(2)
     setHasMore(filteredProjects.length > PROJECTS_PER_PAGE)
-  }, [activeCategory, filteredProjects])
+  }, [activeCategory]) // Removed filteredProjects from dependencies since it's memoized
+
+  const handleIntersection = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      if (entries[0].isIntersecting && hasMore && !isLoading) {
+        loadMoreProjects()
+      }
+    },
+    [loadMoreProjects, hasMore, isLoading],
+  )
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoading) {
-          loadMoreProjects()
-        }
-      },
-      { threshold: 0.1 },
-    )
+    const observer = new IntersectionObserver(handleIntersection, { threshold: 0.1 })
 
     const loadMoreTrigger = document.getElementById("load-more-trigger")
     if (loadMoreTrigger) {
@@ -208,7 +214,7 @@ export function ProjectsSection() {
     }
 
     return () => observer.disconnect()
-  }, [loadMoreProjects, hasMore, isLoading])
+  }, [handleIntersection]) // Use memoized callback in dependencies
 
   return (
     <section id="projects" className="py-20 px-6">

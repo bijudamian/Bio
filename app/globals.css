@@ -200,6 +200,11 @@
 
 /* Accessibility Enhancements */
 @layer utilities {
+  /* Added missing bg-quantum-darker utility class */
+  .bg-quantum-darker {
+    background-color: var(--quantum-darker);
+  }
+
   /* High Contrast Mode */
   .high-contrast {
     --quantum-dark: #000000;
