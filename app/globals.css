@@ -184,28 +184,120 @@
     @apply bg-quantum-darker;
   }
 
+  /* Restored original Tailwind opacity modifier syntax for scrollbar */
   ::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 212, 255, 0.3);
-    @apply rounded-full;
+    @apply bg-quantum-primary/30 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 212, 255, 0.5);
+    @apply bg-quantum-primary/50;
   }
 
-  /* Quantum Selection */
+  /* Restored original Tailwind opacity modifier syntax for selection */
   ::selection {
-    background-color: rgba(0, 212, 255, 0.2);
-    /* Replace @apply text-quantum-light with direct CSS color property */
-    color: #e8e8f0;
+    @apply bg-quantum-primary/20 text-quantum-light;
   }
 }
 
 /* Accessibility Enhancements */
 @layer utilities {
-  /* Added missing bg-quantum-darker utility class */
+  /* Added comprehensive quantum color utilities with opacity support */
+  .bg-quantum-dark {
+    background-color: var(--quantum-dark);
+  }
   .bg-quantum-darker {
     background-color: var(--quantum-darker);
+  }
+  .bg-quantum-card {
+    background-color: var(--quantum-card);
+  }
+  .bg-quantum-border {
+    background-color: var(--quantum-border);
+  }
+  .bg-quantum-light {
+    background-color: var(--quantum-light);
+  }
+  .bg-quantum-muted {
+    background-color: var(--quantum-muted);
+  }
+  .bg-quantum-subtle {
+    background-color: var(--quantum-subtle);
+  }
+  .bg-quantum-primary {
+    background-color: var(--quantum-primary);
+  }
+  .bg-quantum-secondary {
+    background-color: var(--quantum-secondary);
+  }
+  .bg-quantum-accent {
+    background-color: var(--quantum-accent);
+  }
+  .bg-quantum-warning {
+    background-color: var(--quantum-warning);
+  }
+  .bg-quantum-danger {
+    background-color: var(--quantum-danger);
+  }
+
+  /* Added quantum color utilities with opacity modifiers */
+  .bg-quantum-primary\/10 {
+    background-color: rgb(from var(--quantum-primary) r g b / 0.1);
+  }
+  .bg-quantum-primary\/20 {
+    background-color: rgb(from var(--quantum-primary) r g b / 0.2);
+  }
+  .bg-quantum-primary\/30 {
+    background-color: rgb(from var(--quantum-primary) r g b / 0.3);
+  }
+  .bg-quantum-primary\/40 {
+    background-color: rgb(from var(--quantum-primary) r g b / 0.4);
+  }
+  .bg-quantum-primary\/50 {
+    background-color: rgb(from var(--quantum-primary) r g b / 0.5);
+  }
+  .bg-quantum-secondary\/10 {
+    background-color: rgb(from var(--quantum-secondary) r g b / 0.1);
+  }
+  .bg-quantum-secondary\/20 {
+    background-color: rgb(from var(--quantum-secondary) r g b / 0.2);
+  }
+  .bg-quantum-secondary\/30 {
+    background-color: rgb(from var(--quantum-secondary) r g b / 0.3);
+  }
+  .bg-quantum-accent\/10 {
+    background-color: rgb(from var(--quantum-accent) r g b / 0.1);
+  }
+  .bg-quantum-accent\/20 {
+    background-color: rgb(from var(--quantum-accent) r g b / 0.2);
+  }
+
+  /* Added text color utilities */
+  .text-quantum-dark {
+    color: var(--quantum-dark);
+  }
+  .text-quantum-light {
+    color: var(--quantum-light);
+  }
+  .text-quantum-muted {
+    color: var(--quantum-muted);
+  }
+  .text-quantum-subtle {
+    color: var(--quantum-subtle);
+  }
+  .text-quantum-primary {
+    color: var(--quantum-primary);
+  }
+  .text-quantum-secondary {
+    color: var(--quantum-secondary);
+  }
+  .text-quantum-accent {
+    color: var(--quantum-accent);
+  }
+  .text-quantum-warning {
+    color: var(--quantum-warning);
+  }
+  .text-quantum-danger {
+    color: var(--quantum-danger);
   }
 
   /* High Contrast Mode */
