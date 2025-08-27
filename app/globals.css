@@ -185,16 +185,19 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-quantum-primary/30 rounded-full;
+    background-color: rgba(0, 212, 255, 0.3);
+    @apply rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-quantum-primary/50;
+    background-color: rgba(0, 212, 255, 0.5);
   }
 
   /* Quantum Selection */
   ::selection {
-    @apply bg-quantum-primary/20 text-quantum-light;
+    background-color: rgba(0, 212, 255, 0.2);
+    /* Replace @apply text-quantum-light with direct CSS color property */
+    color: #e8e8f0;
   }
 }
 
