@@ -163,17 +163,25 @@ export function ContactSection() {
     setSubmitStatus("idle")
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
 
-      // Simulate success/error randomly for demo
-      if (Math.random() > 0.2) {
+      const result = await response.json()
+
+      if (response.ok) {
         setSubmitStatus("success")
         setFormData({ name: "", email: "", subject: "", message: "" })
       } else {
+        console.error("Contact form error:", result.error)
         setSubmitStatus("error")
       }
     } catch (error) {
+      console.error("Contact form submission error:", error)
       setSubmitStatus("error")
     } finally {
       setIsSubmitting(false)
@@ -191,12 +199,30 @@ export function ContactSection() {
     setPingMessages((prev) => [newPing, ...prev])
     setQuickMessage("")
 
-    // Simulate sending ping
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: "Quick Ping User",
+          email: "quickping@portfolio.com",
+          subject: "Quick Ping Message",
+          message: message,
+          type: "ping",
+        }),
+      })
 
-    // Show success feedback
-    setSubmitStatus("success")
-    setTimeout(() => setSubmitStatus("idle"), 3000)
+      if (response.ok) {
+        setSubmitStatus("success")
+        setTimeout(() => setSubmitStatus("idle"), 3000)
+      } else {
+        console.error("Quick ping error")
+      }
+    } catch (error) {
+      console.error("Quick ping submission error:", error)
+    }
   }
 
   const handleInputChange = (field: keyof FormData, value: string) => {

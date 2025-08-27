@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, Github, Star, GitFork, Eye } from "lucide-react"
+import Image from "next/image"
 
 interface Project {
   id: string
@@ -180,10 +181,15 @@ export function ProjectsSection() {
                 className="group bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:quantum-glow overflow-hidden cursor-pointer"
               >
                 <div className="relative">
-                  <div
-                    className="w-full h-48 bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
-                    style={{ backgroundImage: `url(${project.image || "/placeholder.svg"})` }}
-                  />
+                  <div className="relative w-full h-48 overflow-hidden">
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </div>
                   <div className="absolute top-4 left-4">
                     <Badge className={`${getStatusColor(project.status)} text-xs font-medium`}>
                       {getStatusLabel(project.status)}
@@ -280,10 +286,15 @@ export function ProjectsSection() {
               className="group bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:quantum-glow overflow-hidden cursor-pointer"
             >
               <div className="relative">
-                <div
-                  className="w-full h-48 bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
-                  style={{ backgroundImage: `url(${project.image || "/placeholder.svg"})` }}
-                />
+                <div className="relative w-full h-48 overflow-hidden">
+                  <Image
+                    src={project.image || "/placeholder.svg"}
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
                 <div className="absolute top-4 left-4">
                   <Badge className={`${getStatusColor(project.status)} text-xs font-medium`}>
                     {getStatusLabel(project.status)}

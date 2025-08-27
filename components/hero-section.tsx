@@ -22,12 +22,27 @@ export function HeroSection() {
   const [typewriterText, setTypewriterText] = useState("")
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const [visualizationType] = useState<VisualizationType>(() => {
     const types: VisualizationType[] = ["neural", "particles", "waves"]
     return types[Math.floor(Math.random() * types.length)]
   })
 
   const texts = ["Full-Stack Developer", "UI/UX Designer", "Problem Solver", "Innovation Driver"]
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(
+        window.innerWidth < 768 ||
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+      )
+    }
+
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -44,17 +59,29 @@ export function HeroSection() {
     resizeCanvas()
     window.addEventListener("resize", resizeCanvas)
 
-    // Initialize particles based on visualization type
-    const particleCount = visualizationType === "neural" ? 150 : visualizationType === "particles" ? 100 : 80
+    const getParticleCount = () => {
+      if (isMobile) {
+        return visualizationType === "neural" ? 38 : visualizationType === "particles" ? 25 : 20
+      }
+      return visualizationType === "neural" ? 150 : visualizationType === "particles" ? 100 : 80
+    }
+
+    const particleCount = getParticleCount()
     const newParticles: Particle[] = []
     const colors = ["#00d4ff", "#7c3aed", "#10b981"]
+
+    if (isMobile && window.innerWidth < 480) {
+      return () => {
+        window.removeEventListener("resize", resizeCanvas)
+      }
+    }
 
     for (let i = 0; i < particleCount; i++) {
       newParticles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * (visualizationType === "waves" ? 0.2 : 0.5),
-        vy: (Math.random() - 0.5) * (visualizationType === "waves" ? 0.2 : 0.5),
+        vx: (Math.random() - 0.5) * (isMobile ? 0.2 : visualizationType === "waves" ? 0.2 : 0.5),
+        vy: (Math.random() - 0.5) * (isMobile ? 0.2 : visualizationType === "waves" ? 0.2 : 0.5),
         size: Math.random() * (visualizationType === "neural" ? 1.5 : 2) + 1,
         opacity: Math.random() * 0.5 + 0.2,
         color: colors[Math.floor(Math.random() * colors.length)],
@@ -66,13 +93,11 @@ export function HeroSection() {
     let animationId: number
     let time = 0
 
-    // Animation loop with different effects based on type
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       time += 0.01
 
       if (visualizationType === "neural") {
-        // Neural network style with connections
         newParticles.forEach((particle, index) => {
           particle.x += particle.vx
           particle.y += particle.vy
@@ -80,7 +105,6 @@ export function HeroSection() {
           if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
           if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
 
-          // Draw particle
           ctx.beginPath()
           ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
           ctx.fillStyle = `${particle.color}${Math.floor(particle.opacity * 255)
@@ -88,17 +112,17 @@ export function HeroSection() {
             .padStart(2, "0")}`
           ctx.fill()
 
-          // Draw neural connections
+          const connectionDistance = isMobile ? 80 : 120
           newParticles.slice(index + 1).forEach((otherParticle) => {
             const dx = particle.x - otherParticle.x
             const dy = particle.y - otherParticle.y
             const distance = Math.sqrt(dx * dx + dy * dy)
 
-            if (distance < 120) {
+            if (distance < connectionDistance) {
               ctx.beginPath()
               ctx.moveTo(particle.x, particle.y)
               ctx.lineTo(otherParticle.x, otherParticle.y)
-              ctx.strokeStyle = `${particle.color}${Math.floor((1 - distance / 120) * 0.3 * 255)
+              ctx.strokeStyle = `${particle.color}${Math.floor((1 - distance / connectionDistance) * 0.3 * 255)
                 .toString(16)
                 .padStart(2, "0")}`
               ctx.lineWidth = 0.5
@@ -107,7 +131,6 @@ export function HeroSection() {
           })
         })
       } else if (visualizationType === "particles") {
-        // Floating particles with glow
         newParticles.forEach((particle) => {
           particle.x += particle.vx
           particle.y += particle.vy
@@ -116,36 +139,45 @@ export function HeroSection() {
           if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
           if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
 
-          // Draw glowing particle
-          const gradient = ctx.createRadialGradient(
-            particle.x,
-            particle.y,
-            0,
-            particle.x,
-            particle.y,
-            particle.size * 3,
-          )
-          gradient.addColorStop(
-            0,
-            `${particle.color}${Math.floor(particle.opacity * 255)
+          if (isMobile) {
+            ctx.beginPath()
+            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
+            ctx.fillStyle = `${particle.color}${Math.floor(particle.opacity * 255)
               .toString(16)
-              .padStart(2, "0")}`,
-          )
-          gradient.addColorStop(1, `${particle.color}00`)
+              .padStart(2, "0")}`
+            ctx.fill()
+          } else {
+            const gradient = ctx.createRadialGradient(
+              particle.x,
+              particle.y,
+              0,
+              particle.x,
+              particle.y,
+              particle.size * 3,
+            )
+            gradient.addColorStop(
+              0,
+              `${particle.color}${Math.floor(particle.opacity * 255)
+                .toString(16)
+                .padStart(2, "0")}`,
+            )
+            gradient.addColorStop(1, `${particle.color}00`)
 
-          ctx.fillStyle = gradient
-          ctx.beginPath()
-          ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2)
-          ctx.fill()
+            ctx.fillStyle = gradient
+            ctx.beginPath()
+            ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2)
+            ctx.fill()
+          }
         })
       } else if (visualizationType === "waves") {
-        // Wave pattern visualization
         ctx.strokeStyle = "#00d4ff40"
-        ctx.lineWidth = 2
+        ctx.lineWidth = isMobile ? 1 : 2
 
-        for (let i = 0; i < 5; i++) {
+        const waveCount = isMobile ? 3 : 5
+        for (let i = 0; i < waveCount; i++) {
           ctx.beginPath()
-          for (let x = 0; x < canvas.width; x += 5) {
+          const step = isMobile ? 10 : 5
+          for (let x = 0; x < canvas.width; x += step) {
             const y = canvas.height / 2 + Math.sin((x + time * 100 + i * 50) * 0.01) * (50 + i * 20)
             if (x === 0) ctx.moveTo(x, y)
             else ctx.lineTo(x, y)
@@ -153,7 +185,6 @@ export function HeroSection() {
           ctx.stroke()
         }
 
-        // Floating particles on waves
         newParticles.forEach((particle) => {
           particle.x += particle.vx
           particle.y = canvas.height / 2 + Math.sin((particle.x + time * 100) * 0.01) * 100 + (Math.random() - 0.5) * 50
@@ -178,33 +209,7 @@ export function HeroSection() {
       window.removeEventListener("resize", resizeCanvas)
       cancelAnimationFrame(animationId)
     }
-  }, [visualizationType])
-
-  // Typewriter effect
-  useEffect(() => {
-    const currentText = texts[currentTextIndex]
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          if (typewriterText.length < currentText.length) {
-            setTypewriterText(currentText.slice(0, typewriterText.length + 1))
-          } else {
-            setTimeout(() => setIsDeleting(true), 2000)
-          }
-        } else {
-          if (typewriterText.length > 0) {
-            setTypewriterText(typewriterText.slice(0, -1))
-          } else {
-            setIsDeleting(false)
-            setCurrentTextIndex((prev) => (prev + 1) % texts.length)
-          }
-        }
-      },
-      isDeleting ? 50 : 100,
-    )
-
-    return () => clearTimeout(timeout)
-  }, [typewriterText, currentTextIndex, isDeleting, texts])
+  }, [visualizationType, isMobile])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -215,16 +220,13 @@ export function HeroSection() {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Enhanced Canvas with ChatGPT-inspired effects */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0" style={{ background: "transparent" }} />
 
-      {/* v0-style Gradient Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-quantum-primary/5 via-transparent to-quantum-secondary/5"></div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-quantum-accent/10 via-transparent to-transparent"></div>
       </div>
 
-      {/* Quantum Grid Background */}
       <div className="absolute inset-0 z-0 opacity-10">
         <div
           className="absolute inset-0"
@@ -238,10 +240,8 @@ export function HeroSection() {
         />
       </div>
 
-      {/* Hero Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         <div className="space-y-8">
-          {/* Quantum Avatar */}
           <div className="flex justify-center mb-8">
             <div className="relative">
               <div className="w-32 h-32 rounded-full bg-gradient-to-br from-quantum-primary via-quantum-secondary to-quantum-accent p-1 animate-quantum-rotate">
@@ -255,14 +255,12 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Main Heading */}
           <div className="space-y-4">
             <h1 className="text-5xl md:text-7xl font-bold leading-tight">
               <span className="block text-quantum-light">Hello, I'm</span>
               <span className="block quantum-gradient-text animate-quantum-float">Biju Damian</span>
             </h1>
 
-            {/* Typewriter Effect */}
             <div className="h-16 flex items-center justify-center">
               <h2 className="text-2xl md:text-3xl font-medium text-quantum-muted">
                 <span className="quantum-gradient-text">{typewriterText}</span>
@@ -271,7 +269,6 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Description with visualization type indicator */}
           <p className="text-lg md:text-xl text-quantum-muted max-w-3xl mx-auto leading-relaxed">
             Crafting exceptional digital experiences with cutting-edge technology. Specializing in full-stack
             development, quantum-inspired design, and innovative solutions that push the boundaries of what's possible.
@@ -285,7 +282,6 @@ export function HeroSection() {
             </span>
           </p>
 
-          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
             <Button
               size="lg"
@@ -304,7 +300,6 @@ export function HeroSection() {
             </Button>
           </div>
 
-          {/* Social Links */}
           <div className="flex justify-center space-x-6 pt-8">
             {[
               { icon: Github, href: "https://github.com/bijudamian", label: "GitHub" },
@@ -323,7 +318,6 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
           <button
             onClick={() => scrollToSection("about")}
@@ -335,7 +329,6 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Quantum Orbs */}
       <div className="absolute top-20 left-20 w-64 h-64 bg-quantum-primary/10 rounded-full blur-3xl animate-quantum-pulse"></div>
       <div
         className="absolute bottom-20 right-20 w-96 h-96 bg-quantum-secondary/10 rounded-full blur-3xl animate-quantum-pulse"
