@@ -62,8 +62,6 @@
   --sidebar-accent-foreground: #0a0a0f;
   --sidebar-border: #1a1a24;
   --sidebar-ring: #00d4ff;
-  /* Added base font size variable for accessibility panel */
-  --base-font-size: 16px;
 }
 
 .dark {
@@ -168,8 +166,6 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    /* Added responsive font size based on accessibility settings */
-    font-size: var(--base-font-size);
     background-image: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
@@ -184,7 +180,6 @@
     @apply bg-quantum-darker;
   }
 
-  /* Restored original Tailwind opacity modifier syntax for scrollbar */
   ::-webkit-scrollbar-thumb {
     @apply bg-quantum-primary/30 rounded-full;
   }
@@ -193,171 +188,14 @@
     @apply bg-quantum-primary/50;
   }
 
-  /* Restored original Tailwind opacity modifier syntax for selection */
+  /* Quantum Selection */
   ::selection {
     @apply bg-quantum-primary/20 text-quantum-light;
   }
 }
 
-/* Accessibility Enhancements */
+/* Quantum Animation Utilities */
 @layer utilities {
-  /* Added comprehensive quantum color utilities with opacity support */
-  .bg-quantum-dark {
-    background-color: var(--quantum-dark);
-  }
-  .bg-quantum-darker {
-    background-color: var(--quantum-darker);
-  }
-  .bg-quantum-card {
-    background-color: var(--quantum-card);
-  }
-  .bg-quantum-border {
-    background-color: var(--quantum-border);
-  }
-  .bg-quantum-light {
-    background-color: var(--quantum-light);
-  }
-  .bg-quantum-muted {
-    background-color: var(--quantum-muted);
-  }
-  .bg-quantum-subtle {
-    background-color: var(--quantum-subtle);
-  }
-  .bg-quantum-primary {
-    background-color: var(--quantum-primary);
-  }
-  .bg-quantum-secondary {
-    background-color: var(--quantum-secondary);
-  }
-  .bg-quantum-accent {
-    background-color: var(--quantum-accent);
-  }
-  .bg-quantum-warning {
-    background-color: var(--quantum-warning);
-  }
-  .bg-quantum-danger {
-    background-color: var(--quantum-danger);
-  }
-
-  /* Added quantum color utilities with opacity modifiers */
-  .bg-quantum-primary\/10 {
-    background-color: rgb(from var(--quantum-primary) r g b / 0.1);
-  }
-  .bg-quantum-primary\/20 {
-    background-color: rgb(from var(--quantum-primary) r g b / 0.2);
-  }
-  .bg-quantum-primary\/30 {
-    background-color: rgb(from var(--quantum-primary) r g b / 0.3);
-  }
-  .bg-quantum-primary\/40 {
-    background-color: rgb(from var(--quantum-primary) r g b / 0.4);
-  }
-  .bg-quantum-primary\/50 {
-    background-color: rgb(from var(--quantum-primary) r g b / 0.5);
-  }
-  .bg-quantum-secondary\/10 {
-    background-color: rgb(from var(--quantum-secondary) r g b / 0.1);
-  }
-  .bg-quantum-secondary\/20 {
-    background-color: rgb(from var(--quantum-secondary) r g b / 0.2);
-  }
-  .bg-quantum-secondary\/30 {
-    background-color: rgb(from var(--quantum-secondary) r g b / 0.3);
-  }
-  .bg-quantum-accent\/10 {
-    background-color: rgb(from var(--quantum-accent) r g b / 0.1);
-  }
-  .bg-quantum-accent\/20 {
-    background-color: rgb(from var(--quantum-accent) r g b / 0.2);
-  }
-
-  /* Added text color utilities */
-  .text-quantum-dark {
-    color: var(--quantum-dark);
-  }
-  .text-quantum-light {
-    color: var(--quantum-light);
-  }
-  .text-quantum-muted {
-    color: var(--quantum-muted);
-  }
-  .text-quantum-subtle {
-    color: var(--quantum-subtle);
-  }
-  .text-quantum-primary {
-    color: var(--quantum-primary);
-  }
-  .text-quantum-secondary {
-    color: var(--quantum-secondary);
-  }
-  .text-quantum-accent {
-    color: var(--quantum-accent);
-  }
-  .text-quantum-warning {
-    color: var(--quantum-warning);
-  }
-  .text-quantum-danger {
-    color: var(--quantum-danger);
-  }
-
-  /* High Contrast Mode */
-  .high-contrast {
-    --quantum-dark: #000000;
-    --quantum-card: #1a1a1a;
-    --quantum-border: #ffffff;
-    --quantum-light: #ffffff;
-    --quantum-muted: #cccccc;
-    --quantum-primary: #00ffff;
-    --quantum-secondary: #ff00ff;
-    --quantum-accent: #00ff00;
-  }
-
-  .high-contrast * {
-    border-color: var(--quantum-border) !important;
-    outline: 2px solid transparent;
-  }
-
-  .high-contrast *:focus {
-    outline: 3px solid var(--quantum-primary) !important;
-    outline-offset: 2px;
-  }
-
-  /* Reduced Motion */
-  .reduce-motion *,
-  .reduce-motion *::before,
-  .reduce-motion *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  .reduce-motion .animate-quantum-pulse,
-  .reduce-motion .animate-quantum-float,
-  .reduce-motion .animate-quantum-rotate {
-    animation: none !important;
-  }
-
-  /* Respect user's motion preferences */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-
-  /* Enhanced Focus Indicators */
-  .focus-visible:focus-visible {
-    outline: 3px solid var(--quantum-primary);
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-
-  /* Quantum Animation Utilities */
   .quantum-glow {
     box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
   }

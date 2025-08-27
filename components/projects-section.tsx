@@ -1,11 +1,11 @@
 "use client"
 
-import { useState, useEffect, useCallback, useMemo } from "react"
+import { useState } from "react"
+import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, Github, Star, GitFork, Eye } from "lucide-react"
-import Image from "next/image"
 
 interface Project {
   id: string
@@ -28,12 +28,6 @@ interface Project {
 
 export function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState("all")
-  const [displayedProjects, setDisplayedProjects] = useState<Project[]>([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [isLoading, setIsLoading] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
-  const PROJECTS_PER_PAGE = 3
-
   const projects: Project[] = [
     {
       id: "quantum-dashboard",
@@ -135,10 +129,7 @@ export function ProjectsSection() {
     { id: "blockchain", label: "Blockchain", count: projects.filter((p) => p.category === "blockchain").length },
   ]
 
-  const filteredProjects = useMemo(() => {
-    return activeCategory === "all" ? projects : projects.filter((p) => p.category === activeCategory)
-  }, [activeCategory])
-
+  const filteredProjects = activeCategory === "all" ? projects : projects.filter((p) => p.category === activeCategory)
   const featuredProjects = projects.filter((p) => p.featured)
 
   const getStatusColor = (status: Project["status"]) => {
@@ -167,55 +158,6 @@ export function ProjectsSection() {
     }
   }
 
-  const loadMoreProjects = useCallback(() => {
-    if (isLoading || !hasMore) return
-
-    setIsLoading(true)
-
-    // Simulate API delay
-    setTimeout(() => {
-      const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE
-      const endIndex = startIndex + PROJECTS_PER_PAGE
-      const newProjects = filteredProjects.slice(startIndex, endIndex)
-
-      if (newProjects.length === 0) {
-        setHasMore(false)
-      } else {
-        setDisplayedProjects((prev) => [...prev, ...newProjects])
-        setCurrentPage((prev) => prev + 1)
-      }
-
-      setIsLoading(false)
-    }, 500)
-  }, [currentPage, filteredProjects, isLoading, hasMore])
-
-  useEffect(() => {
-    const initialProjects = filteredProjects.slice(0, PROJECTS_PER_PAGE)
-    setDisplayedProjects(initialProjects)
-    setCurrentPage(2)
-    setHasMore(filteredProjects.length > PROJECTS_PER_PAGE)
-  }, [activeCategory]) // Removed filteredProjects from dependencies since it's memoized
-
-  const handleIntersection = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      if (entries[0].isIntersecting && hasMore && !isLoading) {
-        loadMoreProjects()
-      }
-    },
-    [loadMoreProjects, hasMore, isLoading],
-  )
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(handleIntersection, { threshold: 0.1 })
-
-    const loadMoreTrigger = document.getElementById("load-more-trigger")
-    if (loadMoreTrigger) {
-      observer.observe(loadMoreTrigger)
-    }
-
-    return () => observer.disconnect()
-  }, [handleIntersection]) // Use memoized callback in dependencies
-
   return (
     <section id="projects" className="py-20 px-6">
       <div className="max-w-7xl mx-auto">
@@ -242,10 +184,11 @@ export function ProjectsSection() {
                   <div className="relative w-full h-48 overflow-hidden">
                     <Image
                       src={project.image || "/placeholder.svg"}
-                      alt={project.title}
+                      alt={`${project.title} project screenshot`}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority={project.featured}
                     />
                   </div>
                   <div className="absolute top-4 left-4">
@@ -338,7 +281,7 @@ export function ProjectsSection() {
 
         {/* All Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayedProjects.map((project) => (
+          {filteredProjects.map((project) => (
             <Card
               key={project.id}
               className="group bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:quantum-glow overflow-hidden cursor-pointer"
@@ -347,10 +290,11 @@ export function ProjectsSection() {
                 <div className="relative w-full h-48 overflow-hidden">
                   <Image
                     src={project.image || "/placeholder.svg"}
-                    alt={project.title}
+                    alt={`${project.title} project screenshot`}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    loading="lazy"
                   />
                 </div>
                 <div className="absolute top-4 left-4">
@@ -417,25 +361,6 @@ export function ProjectsSection() {
             </Card>
           ))}
         </div>
-
-        {hasMore && (
-          <div id="load-more-trigger" className="flex justify-center mt-12">
-            {isLoading ? (
-              <div className="flex items-center space-x-2 text-quantum-muted">
-                <div className="w-6 h-6 border-2 border-quantum-primary border-t-transparent rounded-full animate-spin"></div>
-                <span>Loading more projects...</span>
-              </div>
-            ) : (
-              <Button
-                onClick={loadMoreProjects}
-                variant="outline"
-                className="border-quantum-border hover:border-quantum-primary text-quantum-muted hover:text-quantum-primary bg-transparent"
-              >
-                Load More Projects
-              </Button>
-            )}
-          </div>
-        )}
 
         {/* Project Stats */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-6">

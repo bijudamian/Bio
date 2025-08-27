@@ -11,7 +11,6 @@ import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
 import { PerformanceMonitor } from "@/components/performance-monitor"
 import { AccessibilityFeatures } from "@/components/accessibility-features"
-import { AccessibilityPanel } from "@/components/accessibility-panel"
 import { LoadingScreen } from "@/components/loading-states"
 
 export default function HomePage() {
@@ -32,7 +31,6 @@ export default function HomePage() {
         {/* Performance & Accessibility Features */}
         <PerformanceMonitor />
         <AccessibilityFeatures />
-        <AccessibilityPanel />
       </main>
     </>
   )

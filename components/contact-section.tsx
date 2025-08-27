@@ -88,13 +88,6 @@ export function ContactSection() {
       description: "Available Mon-Fri, 9AM-6PM IST",
     },
     {
-      icon: MessageCircle,
-      label: "WhatsApp",
-      value: "+91 8790882114",
-      href: "https://wa.me/918790882114?text=Hi%20Biju!%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect.",
-      description: "Quick chat on WhatsApp",
-    },
-    {
       icon: MapPin,
       label: "Location",
       value: "India",
@@ -170,25 +163,17 @@ export function ContactSection() {
     setSubmitStatus("idle")
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 2000))
 
-      const result = await response.json()
-
-      if (response.ok) {
+      // Simulate success/error randomly for demo
+      if (Math.random() > 0.2) {
         setSubmitStatus("success")
         setFormData({ name: "", email: "", subject: "", message: "" })
       } else {
-        console.error("Contact form error:", result.error)
         setSubmitStatus("error")
       }
     } catch (error) {
-      console.error("Contact form submission error:", error)
       setSubmitStatus("error")
     } finally {
       setIsSubmitting(false)
@@ -206,30 +191,12 @@ export function ContactSection() {
     setPingMessages((prev) => [newPing, ...prev])
     setQuickMessage("")
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: "Quick Ping User",
-          email: "quickping@portfolio.com",
-          subject: "Quick Ping Message",
-          message: message,
-          type: "ping",
-        }),
-      })
+    // Simulate sending ping
+    await new Promise((resolve) => setTimeout(resolve, 1000))
 
-      if (response.ok) {
-        setSubmitStatus("success")
-        setTimeout(() => setSubmitStatus("idle"), 3000)
-      } else {
-        console.error("Quick ping error")
-      }
-    } catch (error) {
-      console.error("Quick ping submission error:", error)
-    }
+    // Show success feedback
+    setSubmitStatus("success")
+    setTimeout(() => setSubmitStatus("idle"), 3000)
   }
 
   const handleInputChange = (field: keyof FormData, value: string) => {

@@ -62,20 +62,7 @@ export function LoadingScreen() {
   )
 }
 
-export function OptimizedImage({
-  src,
-  alt,
-  className,
-  width,
-  height,
-  ...props
-}: {
-  src: string
-  alt: string
-  className?: string
-  width: number
-  height: number
-} & React.ComponentProps<typeof Image>) {
+export function LazyImage({ src, alt, className, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isError, setIsError] = useState(false)
 
@@ -93,45 +80,13 @@ export function OptimizedImage({
       )}
       <Image
         src={src || "/placeholder.svg"}
-        alt={alt}
-        width={width}
-        height={height}
-        className={`transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"} ${className}`}
+        alt={alt || ""}
+        fill
+        className={`transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"} object-cover`}
         onLoad={() => setIsLoaded(true)}
         onError={() => setIsError(true)}
-        loading="lazy"
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        {...props}
-      />
-    </div>
-  )
-}
-
-// Keep the original LazyImage for backward compatibility but mark as deprecated
-export function LazyImage({ src, alt, className, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) {
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [isError, setIsError] = useState(false)
-
-  return (
-    <div className={`relative overflow-hidden ${className}`}>
-      {!isLoaded && !isError && (
-        <div className="absolute inset-0 bg-quantum-card animate-pulse flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-quantum-primary border-t-transparent rounded-full animate-spin" />
-        </div>
-      )}
-      {isError && (
-        <div className="absolute inset-0 bg-quantum-card flex items-center justify-center">
-          <span className="text-quantum-muted text-sm">Failed to load image</span>
-        </div>
-      )}
-      <img
-        src={src || "/placeholder.svg"}
-        alt={alt}
-        className={`transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"} ${className}`}
-        onLoad={() => setIsLoaded(true)}
-        onError={() => setIsError(true)}
-        loading="lazy"
-        {...props}
+        {...(props as any)}
       />
     </div>
   )
