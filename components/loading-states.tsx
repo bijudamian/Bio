@@ -1,8 +1,8 @@
 "use client"
 
 import type React from "react"
+
 import { useEffect, useState } from "react"
-import Image from "next/image"
 
 export function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true)
@@ -78,15 +78,14 @@ export function LazyImage({ src, alt, className, ...props }: React.ImgHTMLAttrib
           <span className="text-quantum-muted text-sm">Failed to load image</span>
         </div>
       )}
-      <Image
+      <img
         src={src || "/placeholder.svg"}
-        alt={alt || ""}
-        fill
-        className={`transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"} object-cover`}
+        alt={alt}
+        className={`transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"} ${className}`}
         onLoad={() => setIsLoaded(true)}
         onError={() => setIsError(true)}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        {...(props as any)}
+        loading="lazy"
+        {...props}
       />
     </div>
   )

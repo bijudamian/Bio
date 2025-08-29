@@ -44,29 +44,17 @@ export function HeroSection() {
     resizeCanvas()
     window.addEventListener("resize", resizeCanvas)
 
-    const isMobile =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-      window.innerWidth < 768
-    const mobileReduction = isMobile ? 0.25 : 1 // 75% reduction for mobile
-
-    // Initialize particles based on visualization type with mobile optimization
-    const baseParticleCount = visualizationType === "neural" ? 150 : visualizationType === "particles" ? 100 : 80
-    const particleCount = Math.floor(baseParticleCount * mobileReduction)
+    // Initialize particles based on visualization type
+    const particleCount = visualizationType === "neural" ? 150 : visualizationType === "particles" ? 100 : 80
     const newParticles: Particle[] = []
     const colors = ["#00d4ff", "#7c3aed", "#10b981"]
-
-    if (isMobile && window.innerWidth < 480) {
-      return () => {
-        window.removeEventListener("resize", resizeCanvas)
-      }
-    }
 
     for (let i = 0; i < particleCount; i++) {
       newParticles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * (visualizationType === "waves" ? 0.2 : 0.5) * (isMobile ? 0.5 : 1),
-        vy: (Math.random() - 0.5) * (visualizationType === "waves" ? 0.2 : 0.5) * (isMobile ? 0.5 : 1),
+        vx: (Math.random() - 0.5) * (visualizationType === "waves" ? 0.2 : 0.5),
+        vy: (Math.random() - 0.5) * (visualizationType === "waves" ? 0.2 : 0.5),
         size: Math.random() * (visualizationType === "neural" ? 1.5 : 2) + 1,
         opacity: Math.random() * 0.5 + 0.2,
         color: colors[Math.floor(Math.random() * colors.length)],
@@ -78,9 +66,10 @@ export function HeroSection() {
     let animationId: number
     let time = 0
 
+    // Animation loop with different effects based on type
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      time += isMobile ? 0.005 : 0.01 // Slower animation on mobile
+      time += 0.01
 
       if (visualizationType === "neural") {
         // Neural network style with connections
@@ -99,28 +88,26 @@ export function HeroSection() {
             .padStart(2, "0")}`
           ctx.fill()
 
-          const connectionDistance = isMobile ? 80 : 120
-          if (!isMobile) {
-            newParticles.slice(index + 1).forEach((otherParticle) => {
-              const dx = particle.x - otherParticle.x
-              const dy = particle.y - otherParticle.y
-              const distance = Math.sqrt(dx * dx + dy * dy)
+          // Draw neural connections
+          newParticles.slice(index + 1).forEach((otherParticle) => {
+            const dx = particle.x - otherParticle.x
+            const dy = particle.y - otherParticle.y
+            const distance = Math.sqrt(dx * dx + dy * dy)
 
-              if (distance < connectionDistance) {
-                ctx.beginPath()
-                ctx.moveTo(particle.x, particle.y)
-                ctx.lineTo(otherParticle.x, otherParticle.y)
-                ctx.strokeStyle = `${particle.color}${Math.floor((1 - distance / connectionDistance) * 0.3 * 255)
-                  .toString(16)
-                  .padStart(2, "0")}`
-                ctx.lineWidth = 0.5
-                ctx.stroke()
-              }
-            })
-          }
+            if (distance < 120) {
+              ctx.beginPath()
+              ctx.moveTo(particle.x, particle.y)
+              ctx.lineTo(otherParticle.x, otherParticle.y)
+              ctx.strokeStyle = `${particle.color}${Math.floor((1 - distance / 120) * 0.3 * 255)
+                .toString(16)
+                .padStart(2, "0")}`
+              ctx.lineWidth = 0.5
+              ctx.stroke()
+            }
+          })
         })
       } else if (visualizationType === "particles") {
-        // Floating particles with glow (simplified on mobile)
+        // Floating particles with glow
         newParticles.forEach((particle) => {
           particle.x += particle.vx
           particle.y += particle.vy
@@ -129,48 +116,36 @@ export function HeroSection() {
           if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
           if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
 
-          if (isMobile) {
-            // Simple particles on mobile
-            ctx.beginPath()
-            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
-            ctx.fillStyle = `${particle.color}${Math.floor(particle.opacity * 255)
+          // Draw glowing particle
+          const gradient = ctx.createRadialGradient(
+            particle.x,
+            particle.y,
+            0,
+            particle.x,
+            particle.y,
+            particle.size * 3,
+          )
+          gradient.addColorStop(
+            0,
+            `${particle.color}${Math.floor(particle.opacity * 255)
               .toString(16)
-              .padStart(2, "0")}`
-            ctx.fill()
-          } else {
-            // Draw glowing particle on desktop
-            const gradient = ctx.createRadialGradient(
-              particle.x,
-              particle.y,
-              0,
-              particle.x,
-              particle.y,
-              particle.size * 3,
-            )
-            gradient.addColorStop(
-              0,
-              `${particle.color}${Math.floor(particle.opacity * 255)
-                .toString(16)
-                .padStart(2, "0")}`,
-            )
-            gradient.addColorStop(1, `${particle.color}00`)
+              .padStart(2, "0")}`,
+          )
+          gradient.addColorStop(1, `${particle.color}00`)
 
-            ctx.fillStyle = gradient
-            ctx.beginPath()
-            ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2)
-            ctx.fill()
-          }
+          ctx.fillStyle = gradient
+          ctx.beginPath()
+          ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2)
+          ctx.fill()
         })
       } else if (visualizationType === "waves") {
-        // Wave pattern visualization (simplified on mobile)
+        // Wave pattern visualization
         ctx.strokeStyle = "#00d4ff40"
-        ctx.lineWidth = isMobile ? 1 : 2
+        ctx.lineWidth = 2
 
-        const waveCount = isMobile ? 3 : 5
-        for (let i = 0; i < waveCount; i++) {
+        for (let i = 0; i < 5; i++) {
           ctx.beginPath()
-          const step = isMobile ? 10 : 5
-          for (let x = 0; x < canvas.width; x += step) {
+          for (let x = 0; x < canvas.width; x += 5) {
             const y = canvas.height / 2 + Math.sin((x + time * 100 + i * 50) * 0.01) * (50 + i * 20)
             if (x === 0) ctx.moveTo(x, y)
             else ctx.lineTo(x, y)
@@ -204,6 +179,32 @@ export function HeroSection() {
       cancelAnimationFrame(animationId)
     }
   }, [visualizationType])
+
+  // Typewriter effect
+  useEffect(() => {
+    const currentText = texts[currentTextIndex]
+    const timeout = setTimeout(
+      () => {
+        if (!isDeleting) {
+          if (typewriterText.length < currentText.length) {
+            setTypewriterText(currentText.slice(0, typewriterText.length + 1))
+          } else {
+            setTimeout(() => setIsDeleting(true), 2000)
+          }
+        } else {
+          if (typewriterText.length > 0) {
+            setTypewriterText(typewriterText.slice(0, -1))
+          } else {
+            setIsDeleting(false)
+            setCurrentTextIndex((prev) => (prev + 1) % texts.length)
+          }
+        }
+      },
+      isDeleting ? 50 : 100,
+    )
+
+    return () => clearTimeout(timeout)
+  }, [typewriterText, currentTextIndex, isDeleting, texts])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)

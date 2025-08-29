@@ -115,7 +115,7 @@ export function ChatbotSection() {
             {/* Chatbot Content */}
             <div className="h-full pb-20">
               <iframe
-                src="https://kiriyagami-chatbot.hf.space"
+                src="https://kiritodoroki-thinker-bot.hf.space"
                 width="100%"
                 height="100%"
                 style={{ border: "none" }}
