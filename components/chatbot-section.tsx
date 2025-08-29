@@ -15,7 +15,7 @@ export function ChatbotSection() {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-quantum-light mb-4">AI Assistant</h2>
             <p className="text-quantum-light/70 text-lg max-w-2xl mx-auto">
-              Interact with my AI-powered chatbot to learn more about my projects, skills, and experience.
+              Explore my collection of AI-powered bots — from fitness and lifestyle coaching to professional coding assistants. Each bot is designed to solve problems, answer questions, and make life a little easier.
             </p>
           </div>
 
@@ -27,11 +27,11 @@ export function ChatbotSection() {
                     <Bot className="w-8 h-8 text-quantum-primary" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-semibold text-quantum-light mb-1">Portfolio Assistant</h3>
-                    <p className="text-quantum-light/60 text-lg">Ask me anything about Biju's work and experience</p>
+                    <h3 className="text-2xl font-semibold text-quantum-light mb-1">Multi-Agent AI</h3>
+                    <p className="text-quantum-light/60 text-lg my-2">Switch between specialized assistants like Fitness Coach, Career Mentor, or Code Expert </p>
                     <div className="flex items-center gap-2 mt-2">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      <span className="text-sm text-quantum-light/50">Powered by Hugging Face</span>
+                      <span className="text-sm text-quantum-light/50 my-0.5">Powered by Hugging Face</span>
                     </div>
                   </div>
                 </div>
@@ -56,18 +56,18 @@ export function ChatbotSection() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6 border-t border-quantum-primary/20">
                 <div className="text-center p-4 bg-quantum-primary/5 rounded-lg">
-                  <h4 className="text-quantum-light font-semibold mb-2">Ask About Projects</h4>
+                  <h4 className="text-quantum-light font-semibold mb-2">Explore Bots </h4>
                   <p className="text-quantum-light/60 text-sm">
-                    Get details about my latest work and technologies used
+                    Discover lifestyle, career, and productivity bots
                   </p>
                 </div>
                 <div className="text-center p-4 bg-quantum-secondary/5 rounded-lg">
-                  <h4 className="text-quantum-light font-semibold mb-2">Discuss Skills</h4>
-                  <p className="text-quantum-light/60 text-sm">Learn about my technical expertise and experience</p>
+                  <h4 className="text-quantum-light font-semibold mb-2">Code &amp; Tech Help</h4>
+                  <p className="text-quantum-light/60 text-sm">Get instant coding or debugging support</p>
                 </div>
                 <div className="text-center p-4 bg-quantum-accent/5 rounded-lg">
-                  <h4 className="text-quantum-light font-semibold mb-2">Career Insights</h4>
-                  <p className="text-quantum-light/60 text-sm">Discover my professional journey and achievements</p>
+                  <h4 className="text-quantum-light font-semibold mb-2">Life &amp; Wellness</h4>
+                  <p className="text-quantum-light/60 text-sm">Chat with fitness, food, and wellness bots</p>
                 </div>
               </div>
             </div>
