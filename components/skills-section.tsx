@@ -224,13 +224,13 @@ export function SkillsSection() {
               <TooltipTrigger asChild>
                 <Card className="p-6 bg-quantum-card border-quantum-border text-center hover:scale-105 hover:shadow-xl hover:shadow-quantum-primary/20 transition-all duration-300 cursor-pointer">
                   <div className="space-y-2">
-                    <div className="text-3xl font-bold quantum-gradient-text">5+</div>
-                    <div className="text-quantum-muted">Years Experience</div>
+                    <div className="text-3xl font-bold quantum-gradient-text">10+</div>
+                    <div className="text-quantum-muted">Certifications</div>
                   </div>
                 </Card>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Professional development experience since 2019</p>
+                <p>10+ certifications (and counting 🚀)</p>
               </TooltipContent>
             </Tooltip>
 
