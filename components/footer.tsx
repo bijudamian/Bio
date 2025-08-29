@@ -62,8 +62,7 @@ export function Footer() {
             </div>
 
             <p className="text-quantum-muted leading-relaxed max-w-md">
-              Passionate full-stack developer specializing in quantum-inspired digital experiences. Creating innovative
-              solutions that push the boundaries of what's possible in web development.
+              Full-stack developer crafting digital experiences inspired by next-gen tech. Focused on building innovative solutions that stretch the limits of modern web development.
             </p>
 
             <div className="space-y-3">
