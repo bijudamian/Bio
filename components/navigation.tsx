@@ -4,7 +4,11 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Circle } from "lucide-react"
 
-export function Navigation() {
+interface NavigationProps {
+  onCycleVisualization: () => void;
+}
+
+export function Navigation({ onCycleVisualization }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
   const [isOnline] = useState(true)
@@ -21,36 +25,20 @@ export function Navigation() {
 
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]")
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const sectionId = entry.target.id
             setActiveSection(sectionId)
-
-            // Track visited sections for dynamic navigation
-            setVisitedSections((prev) => {
-              if (!prev.includes(sectionId)) {
-                return [...prev, sectionId]
-              }
-              return prev
-            })
+            setVisitedSections((prev) => (!prev.includes(sectionId) ? [...prev, sectionId] : prev))
           }
         })
       },
-      {
-        root: null,
-        rootMargin: "-80px 0px -50% 0px",
-        threshold: 0,
-      },
+      { root: null, rootMargin: "-80px 0px -50% 0px", threshold: 0 }
     )
-
     sections.forEach((section) => observer.observe(section))
-
-    return () => {
-      sections.forEach((section) => observer.unobserve(section))
-    }
+    return () => sections.forEach((section) => observer.unobserve(section))
   }, [])
 
   const navItems = [
@@ -65,23 +53,16 @@ export function Navigation() {
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-      setActiveSection(sectionId)
-    }
+    element?.scrollIntoView({ behavior: "smooth" })
+    setActiveSection(sectionId)
   }
 
-  const handlePing = () => {
-    if (isOnline) {
-      // Open quick chat modal or scroll to contact
-      const contactSection = document.getElementById("contact")
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: "smooth" })
-        // Trigger ping animation or notification
-        const event = new CustomEvent("pingUser", { detail: { message: "User wants to connect!" } })
-        window.dispatchEvent(event)
-      }
-    }
+  // This part is unchanged from the previous suggestion
+  const openWhatsApp = () => {
+    const whatsappUrl = `https://wa.me/918790882114?text=${encodeURIComponent(
+      "Hello Biju, I saw your portfolio and wanted to connect!"
+    )}`
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer")
   }
 
   return (
@@ -94,24 +75,31 @@ export function Navigation() {
         <div className="flex items-center justify-between">
           {/* Logo with Online Status */}
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-quantum-primary to-quantum-secondary rounded-lg quantum-glow"></div>
-            <span className="text-xl font-bold quantum-gradient-text">Biju Damian </span>
+            {/* THIS IS THE NEW BUTTON */}
             <button
-              onClick={handlePing}
-              className="flex items-center space-x-2 px-3 py-1 rounded-full bg-quantum-card/50 border border-quantum-border hover:border-quantum-primary transition-all duration-200 group"
-              title={isOnline ? "I'm online - Click to ping me!" : "Currently offline"}
+              onClick={onCycleVisualization}
+              className="w-8 h-8 bg-gradient-to-br from-quantum-primary to-quantum-secondary rounded-lg quantum-glow transition-transform duration-200 hover:scale-110 active:scale-105"
+              aria-label="Change background visualization"
+              title="Change Visualization"
+            />
+            
+            <span className="text-xl font-bold quantum-gradient-text">Biju Damian </span>
+            {/* ... rest of the navigation is the same ... */}
+            <div
+              className="flex items-center space-x-2 px-3 py-1 rounded-full bg-quantum-card/50 border border-quantum-border"
+              title={isOnline ? "I'm online!" : "Currently offline"}
             >
               <Circle
                 size={8}
-                className={`${isOnline ? "text-green-400 fill-green-400" : "text-gray-400 fill-gray-400"} ${isOnline ? "animate-pulse" : ""}`}
+                className={`${
+                  isOnline ? "text-green-400 fill-green-400 animate-pulse" : "text-gray-400 fill-gray-400"
+                }`}
               />
-              <span className="text-xs text-quantum-muted group-hover:text-quantum-primary transition-colors">
-                {isOnline ? "Online" : "Offline"}
-              </span>
-            </button>
+              <span className="text-xs text-quantum-muted">{isOnline ? "Online" : "Offline"}</span>
+            </div>
           </div>
 
-          {/* Navigation Links - Dynamic based on visited sections */}
+          {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
             {visibleNavItems.map((item) => (
               <button
@@ -132,7 +120,7 @@ export function Navigation() {
           {/* CTA Button */}
           <Button
             className="bg-gradient-to-r from-quantum-primary to-quantum-secondary hover:opacity-90 text-quantum-dark font-semibold px-6 py-2 rounded-lg transition-all duration-200 quantum-glow"
-            onClick={() => scrollToSection("contact")}
+            onClick={openWhatsApp}
           >
             Let&apos;s Connect
           </Button>
