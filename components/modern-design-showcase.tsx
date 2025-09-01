@@ -22,7 +22,7 @@ export function ModernDesignShowcase() {
         { name: "Secondary", value: "#6366f1", class: "bg-quantum-secondary" },
         { name: "Accent", value: "#10b981", class: "bg-quantum-accent" },
         { name: "Surface", value: "#111118", class: "bg-quantum-card" },
-      ]
+      ],
     },
     {
       id: "typography",
@@ -35,7 +35,7 @@ export function ModernDesignShowcase() {
         { name: "Heading", class: "text-3xl font-semibold", text: "Heading Text" },
         { name: "Body", class: "text-base", text: "Body text for content" },
         { name: "Caption", class: "text-sm text-quantum-muted", text: "Caption text" },
-      ]
+      ],
     },
     {
       id: "components",
@@ -50,7 +50,7 @@ export function ModernDesignShowcase() {
       description: "Glow effects, gradients, and modern animations",
       icon: Sparkles,
       demo: "effects",
-    }
+    },
   ]
 
   const componentExamples = [
@@ -61,7 +61,7 @@ export function ModernDesignShowcase() {
           <Zap className="w-4 h-4 mr-2" />
           Get Started
         </Button>
-      )
+      ),
     },
     {
       name: "Ghost Button",
@@ -70,7 +70,7 @@ export function ModernDesignShowcase() {
           <Settings className="w-4 h-4 mr-2" />
           Settings
         </Button>
-      )
+      ),
     },
     {
       name: "Interactive Card",
@@ -82,24 +82,20 @@ export function ModernDesignShowcase() {
           </div>
           <p className="text-sm text-quantum-muted">Hover to see interaction</p>
         </Card>
-      )
+      ),
     },
     {
       name: "Badge Collection",
       component: (
         <div className="flex gap-2 flex-wrap">
-          <Badge className="bg-quantum-primary/20 text-quantum-primary border-quantum-primary/30">
-            Modern
-          </Badge>
-          <Badge className="bg-quantum-accent/20 text-quantum-accent border-quantum-accent/30">
-            Responsive
-          </Badge>
+          <Badge className="bg-quantum-primary/20 text-quantum-primary border-quantum-primary/30">Modern</Badge>
+          <Badge className="bg-quantum-accent/20 text-quantum-accent border-quantum-accent/30">Responsive</Badge>
           <Badge className="bg-quantum-secondary/20 text-quantum-secondary border-quantum-secondary/30">
             Accessible
           </Badge>
         </div>
-      )
-    }
+      ),
+    },
   ]
 
   return (
@@ -117,7 +113,8 @@ export function ModernDesignShowcase() {
               <span className="quantum-gradient-text-modern">Modern Design Language</span>
             </h2>
             <p className="text-xl text-quantum-muted max-w-3xl mx-auto quantum-text-pretty">
-              A comprehensive design system built for the modern web, featuring sophisticated aesthetics and seamless user experiences.
+              A comprehensive design system built for the modern web, featuring sophisticated aesthetics and seamless
+              user experiences.
             </p>
           </div>
 
@@ -127,9 +124,9 @@ export function ModernDesignShowcase() {
               return (
                 <Tooltip key={element.id}>
                   <TooltipTrigger asChild>
-                    <Card 
+                    <Card
                       className={`quantum-card-interactive p-6 cursor-pointer ${
-                        activeDemo === element.id ? 'quantum-glow border-quantum-primary' : ''
+                        activeDemo === element.id ? "quantum-glow border-quantum-primary" : ""
                       }`}
                       onClick={() => setActiveDemo(activeDemo === element.id ? null : element.id)}
                     >
@@ -235,4 +232,14 @@ export function ModernDesignShowcase() {
             </Card>
           )}
 
-          { /*
+          <div className="text-center mt-12">
+            <p className="text-quantum-muted">
+              This design system powers the entire portfolio, ensuring consistency and modern aesthetics across all
+              components.
+            </p>
+          </div>
+        </div>
+      </section>
+    </TooltipProvider>
+  )
+}

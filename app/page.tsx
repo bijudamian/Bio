@@ -16,6 +16,8 @@ import { LoadingScreen } from "@/components/loading-states"
 import { AdminPanel } from "@/components/admin-panel"
 import { RealTimeChat } from "@/components/real-time-chat"
 import { AdminChatPanel } from "@/components/admin-chat-panel"
+import { ModernDesignShowcase } from "@/components/modern-design-showcase"
+import { useUser } from "@clerk/nextjs"
 
 const visualizationTypes: VisualizationType[] = [
   "neural",
@@ -43,6 +45,8 @@ export default function HomePage() {
     })
   }
 
+  const { isSignedIn, user } = useUser()
+
   return (
     <>
       <LoadingScreen />
@@ -52,6 +56,9 @@ export default function HomePage() {
         <AboutSection />
         <SkillsSection />
         <ProjectsSection />
+
+        {isSignedIn && <ModernDesignShowcase />}
+
         <ChatbotSection />
         <CtfSection />
         <ContactSection />
@@ -61,12 +68,11 @@ export default function HomePage() {
         <PerformanceMonitor />
         <AccessibilityFeatures />
 
-        {/* Admin Panel for authenticated users */}
-        <AdminPanel />
+        {isSignedIn && <AdminPanel />}
 
         {/* Real-time Chat System */}
         <RealTimeChat />
-        <AdminChatPanel />
+        {isSignedIn && <AdminChatPanel />}
       </main>
     </>
   )
