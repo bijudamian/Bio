@@ -13,13 +13,25 @@ import { Footer } from "@/components/footer"
 import { PerformanceMonitor } from "@/components/performance-monitor"
 import { AccessibilityFeatures } from "@/components/accessibility-features"
 import { LoadingScreen } from "@/components/loading-states"
+import { AdminPanel } from "@/components/admin-panel"
+import { RealTimeChat } from "@/components/real-time-chat"
+import { AdminChatPanel } from "@/components/admin-chat-panel"
 
-const visualizationTypes: VisualizationType[] = ["neural", "particles", "waves", "matrix", "constellation", "hyperspace", "circuit", "glitch"]
+const visualizationTypes: VisualizationType[] = [
+  "neural",
+  "particles",
+  "waves",
+  "matrix",
+  "constellation",
+  "hyperspace",
+  "circuit",
+  "glitch",
+]
 
 export default function HomePage() {
   // State is now managed by the parent component
   const [visualization, setVisualization] = useState<VisualizationType>(
-    () => visualizationTypes[Math.floor(Math.random() * visualizationTypes.length)]
+    () => visualizationTypes[Math.floor(Math.random() * visualizationTypes.length)],
   )
 
   // Function to cycle to the next visualization
@@ -48,6 +60,13 @@ export default function HomePage() {
         {/* Performance & Accessibility Features */}
         <PerformanceMonitor />
         <AccessibilityFeatures />
+
+        {/* Admin Panel for authenticated users */}
+        <AdminPanel />
+
+        {/* Real-time Chat System */}
+        <RealTimeChat />
+        <AdminChatPanel />
       </main>
     </>
   )

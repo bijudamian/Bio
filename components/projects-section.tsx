@@ -1,10 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Github, Star, GitFork, Eye } from "lucide-react"
+import { ExternalLink, Github, Star, GitFork, Eye, RefreshCw, Calendar, Code2 } from "lucide-react"
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
+import Image from "next/image"
 
 interface Project {
   id: string
@@ -23,102 +25,102 @@ interface Project {
     views: number
   }
   status: "completed" | "in-progress" | "concept"
+  createdAt?: string
+  updatedAt?: string
+  pushedAt?: string
+}
+
+interface GitHubResponse {
+  success: boolean
+  projects: Project[]
+  totalRepos: number
+  lastUpdated: string
+  error?: string
+  message?: string
 }
 
 export function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState("all")
-  const projects: Project[] = [
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null)
+
+  const fetchGitHubProjects = async () => {
+    setLoading(true)
+    setError(null)
+
+    try {
+      const response = await fetch("/api/github?username=bijudamian")
+      const data: GitHubResponse = await response.json()
+
+      if (data.success) {
+        setProjects(data.projects)
+        setLastUpdated(data.lastUpdated)
+      } else {
+        setError(data.message || "Failed to fetch projects")
+        // Fallback to placeholder data
+        setProjects(getFallbackProjects())
+      }
+    } catch (err) {
+      console.error("Error fetching GitHub projects:", err)
+      setError("Network error occurred")
+      // Fallback to placeholder data
+      setProjects(getFallbackProjects())
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const getFallbackProjects = (): Project[] => [
     {
-      id: "quantum-dashboard",
-      title: "Quantum Analytics Dashboard",
-      description: "Real-time analytics platform with quantum-inspired visualizations and AI-powered insights.",
+      id: "portfolio-website",
+      title: "Portfolio Website",
+      description: "Modern portfolio website built with Next.js and quantum-inspired design system.",
       longDescription:
-        "A comprehensive analytics dashboard built with Next.js and TypeScript, featuring real-time data visualization, quantum-inspired UI components, and AI-powered insights. Includes advanced filtering, custom chart components, and responsive design optimized for all devices.",
+        "A comprehensive portfolio website showcasing projects, skills, and experience with a quantum-inspired design system, interactive animations, and modern web technologies.",
       image: "/placeholder.svg?height=400&width=600",
       category: "web-app",
-      technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Chart.js", "PostgreSQL", "Prisma"],
-      liveUrl: "https://quantum-dashboard.demo",
-      githubUrl: "https://github.com/user/quantum-dashboard",
+      technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
+      liveUrl: "https://bijudamian.vercel.app",
+      githubUrl: "https://github.com/bijudamian/portfolio",
       featured: true,
-      stats: { stars: 234, forks: 45, views: 1200 },
+      stats: { stars: 15, forks: 3, views: 250 },
       status: "completed",
     },
     {
-      id: "ai-content-generator",
-      title: "AI Content Generator",
-      description: "Intelligent content creation platform powered by advanced language models and quantum algorithms.",
+      id: "task-management-app",
+      title: "Task Management App",
+      description: "Full-stack task management application with real-time collaboration features.",
       longDescription:
-        "An AI-powered content generation platform that leverages GPT models and custom algorithms to create high-quality content. Features include template management, content optimization, SEO analysis, and collaborative editing capabilities.",
-      image: "/placeholder.svg?height=400&width=600",
-      category: "ai-ml",
-      technologies: ["React", "Node.js", "OpenAI API", "MongoDB", "Redis", "Docker"],
-      liveUrl: "https://ai-content.demo",
-      githubUrl: "https://github.com/user/ai-content-generator",
-      featured: true,
-      stats: { stars: 189, forks: 32, views: 890 },
-      status: "completed",
-    },
-    {
-      id: "mobile-fitness-app",
-      title: "Quantum Fitness Tracker",
-      description: "Cross-platform mobile app for fitness tracking with quantum-inspired gamification elements.",
-      longDescription:
-        "A comprehensive fitness tracking application built with React Native, featuring workout planning, progress tracking, social challenges, and quantum-inspired gamification. Includes wearable device integration and AI-powered workout recommendations.",
-      image: "/placeholder.svg?height=400&width=600",
-      category: "mobile",
-      technologies: ["React Native", "Expo", "Firebase", "TypeScript", "Redux Toolkit"],
-      liveUrl: "https://apps.apple.com/quantum-fitness",
-      githubUrl: "https://github.com/user/quantum-fitness",
-      featured: false,
-      stats: { stars: 156, forks: 28, views: 670 },
-      status: "completed",
-    },
-    {
-      id: "blockchain-portfolio",
-      title: "DeFi Portfolio Manager",
-      description: "Decentralized finance portfolio management with quantum security protocols.",
-      longDescription:
-        "A sophisticated DeFi portfolio management platform built on Ethereum, featuring automated yield farming, risk assessment, quantum-secured transactions, and comprehensive analytics. Supports multiple DeFi protocols and provides advanced trading strategies.",
-      image: "/placeholder.svg?height=400&width=600",
-      category: "blockchain",
-      technologies: ["Solidity", "Web3.js", "React", "Hardhat", "IPFS", "MetaMask"],
-      liveUrl: "https://defi-quantum.demo",
-      githubUrl: "https://github.com/user/defi-portfolio",
-      featured: true,
-      stats: { stars: 312, forks: 67, views: 1450 },
-      status: "in-progress",
-    },
-    {
-      id: "quantum-ecommerce",
-      title: "Quantum E-commerce Platform",
-      description: "Next-generation e-commerce platform with AI recommendations and quantum-inspired UX.",
-      longDescription:
-        "A full-stack e-commerce platform featuring AI-powered product recommendations, quantum-inspired user interface, advanced search capabilities, and seamless payment integration. Built with modern technologies for optimal performance and scalability.",
+        "A comprehensive task management platform with real-time updates, team collaboration, project tracking, and advanced filtering capabilities.",
       image: "/placeholder.svg?height=400&width=600",
       category: "web-app",
-      technologies: ["Next.js", "Stripe", "Supabase", "Tailwind CSS", "Vercel", "TypeScript"],
-      liveUrl: "https://quantum-shop.demo",
-      githubUrl: "https://github.com/user/quantum-ecommerce",
-      featured: false,
-      stats: { stars: 198, forks: 41, views: 920 },
+      technologies: ["React", "Node.js", "MongoDB", "Socket.io", "Express"],
+      githubUrl: "https://github.com/bijudamian/task-manager",
+      featured: true,
+      stats: { stars: 8, forks: 2, views: 180 },
       status: "completed",
     },
     {
-      id: "neural-network-viz",
-      title: "Neural Network Visualizer",
-      description: "Interactive visualization tool for understanding neural network architectures and training.",
+      id: "weather-app",
+      title: "Weather Forecast App",
+      description: "Beautiful weather application with location-based forecasts and interactive maps.",
       longDescription:
-        "An educational tool for visualizing neural network architectures, training processes, and decision boundaries. Features interactive network building, real-time training visualization, and quantum-inspired animation effects for enhanced learning experience.",
+        "A modern weather application featuring location-based forecasts, interactive weather maps, detailed weather information, and beautiful UI animations.",
       image: "/placeholder.svg?height=400&width=600",
-      category: "ai-ml",
-      technologies: ["Python", "TensorFlow", "D3.js", "Flask", "WebGL", "NumPy"],
-      liveUrl: "https://neural-viz.demo",
-      githubUrl: "https://github.com/user/neural-network-viz",
+      category: "web-app",
+      technologies: ["React", "OpenWeather API", "Mapbox", "CSS3", "JavaScript"],
+      githubUrl: "https://github.com/bijudamian/weather-app",
       featured: false,
-      stats: { stars: 267, forks: 54, views: 1100 },
-      status: "concept",
+      stats: { stars: 5, forks: 1, views: 120 },
+      status: "completed",
     },
   ]
+
+  useEffect(() => {
+    fetchGitHubProjects()
+  }, [])
 
   const categories = [
     { id: "all", label: "All Projects", count: projects.length },
@@ -157,51 +159,313 @@ export function ProjectsSection() {
     }
   }
 
-  return (
-    <section id="projects" className="py-20 px-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="quantum-gradient-text">Featured Projects</span>
-          </h2>
-          <p className="text-xl text-quantum-muted max-w-3xl mx-auto">
-            A showcase of innovative solutions that demonstrate technical excellence and creative problem-solving.
-          </p>
-        </div>
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return "Unknown"
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
+  }
 
-        {/* Featured Projects Highlight */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-quantum-light mb-8">Spotlight Projects</h3>
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {featuredProjects.map((project) => (
+  if (loading) {
+    return (
+      <section id="projects" className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="quantum-gradient-text">Featured Projects</span>
+            </h2>
+            <div className="flex items-center justify-center gap-2 text-quantum-muted">
+              <RefreshCw className="w-4 h-4 animate-spin" />
+              <span>Loading projects from GitHub...</span>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(6)].map((_, i) => (
+              <Card key={i} className="bg-quantum-card border-quantum-border animate-pulse">
+                <div className="w-full h-48 bg-quantum-darker"></div>
+                <div className="p-6 space-y-4">
+                  <div className="h-4 bg-quantum-darker rounded w-3/4"></div>
+                  <div className="h-3 bg-quantum-darker rounded w-full"></div>
+                  <div className="h-3 bg-quantum-darker rounded w-2/3"></div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  return (
+    <TooltipProvider>
+      <section id="projects" className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="flex justify-center items-center gap-2 mb-4">
+              <Badge
+                variant="secondary"
+                className="bg-quantum-primary/20 text-quantum-primary border-quantum-primary/30"
+              >
+                <Github className="w-3 h-3 mr-1" />
+                Live from GitHub
+              </Badge>
+              {lastUpdated && (
+                <Badge
+                  variant="secondary"
+                  className="bg-quantum-accent/20 text-quantum-accent border-quantum-accent/30"
+                >
+                  <Calendar className="w-3 h-3 mr-1" />
+                  Updated {formatDate(lastUpdated)}
+                </Badge>
+              )}
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="quantum-gradient-text">Featured Projects</span>
+            </h2>
+            <p className="text-xl text-quantum-muted max-w-3xl mx-auto">
+              Real projects from my GitHub repository, showcasing innovative solutions and technical excellence.
+            </p>
+            {error && (
+              <div className="mt-4 p-3 bg-quantum-warning/20 border border-quantum-warning/30 rounded-lg text-quantum-warning text-sm max-w-md mx-auto">
+                {error} - Showing cached projects
+              </div>
+            )}
+            <div className="mt-4">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    onClick={fetchGitHubProjects}
+                    variant="ghost"
+                    size="sm"
+                    className="text-quantum-muted hover:text-quantum-primary"
+                    disabled={loading}
+                  >
+                    <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+                    Refresh Projects
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Fetch latest projects from GitHub</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </div>
+
+          {/* Featured Projects Highlight */}
+          {featuredProjects.length > 0 && (
+            <div className="mb-16">
+              <h3 className="text-2xl font-semibold text-quantum-light mb-8 flex items-center gap-2">
+                <Star className="w-6 h-6 text-quantum-primary" />
+                Spotlight Projects
+              </h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+                {featuredProjects.map((project) => (
+                  <Card
+                    key={project.id}
+                    className="group bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:quantum-glow overflow-hidden cursor-pointer"
+                  >
+                    <div className="relative">
+                      <div className="w-full h-48 relative overflow-hidden">
+                        <Image
+                          src={project.image || "/placeholder.svg"}
+                          alt={`${project.title} screenshot`}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
+                      <div className="absolute top-4 left-4">
+                        <Badge className={`${getStatusColor(project.status)} text-xs font-medium`}>
+                          {getStatusLabel(project.status)}
+                        </Badge>
+                      </div>
+                      {project.featured && (
+                        <div className="absolute top-4 right-4">
+                          <Badge variant="secondary" className="bg-quantum-primary/20 text-quantum-primary text-xs">
+                            <Star className="w-3 h-3 mr-1" />
+                            Featured
+                          </Badge>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="p-6 space-y-4">
+                      <div>
+                        <h4 className="text-xl font-semibold text-quantum-light group-hover:quantum-gradient-text transition-all duration-200">
+                          {project.title}
+                        </h4>
+                        <p className="text-quantum-muted mt-2">{project.description}</p>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies.slice(0, 3).map((tech) => (
+                          <Badge
+                            key={tech}
+                            variant="secondary"
+                            className="bg-quantum-border text-quantum-muted text-xs"
+                          >
+                            {tech}
+                          </Badge>
+                        ))}
+                        {project.technologies.length > 3 && (
+                          <Badge variant="secondary" className="bg-quantum-border text-quantum-muted text-xs">
+                            +{project.technologies.length - 3}
+                          </Badge>
+                        )}
+                      </div>
+
+                      <div className="flex items-center justify-between pt-4">
+                        <div className="flex items-center space-x-4 text-sm text-quantum-muted">
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center space-x-1">
+                                <Star size={14} />
+                                <span>{project.stats.stars}</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>GitHub Stars</p>
+                            </TooltipContent>
+                          </Tooltip>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center space-x-1">
+                                <GitFork size={14} />
+                                <span>{project.stats.forks}</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>GitHub Forks</p>
+                            </TooltipContent>
+                          </Tooltip>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center space-x-1">
+                                <Eye size={14} />
+                                <span>{project.stats.views}</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Estimated Views</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+
+                        <div className="flex space-x-2">
+                          {project.liveUrl && (
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="p-2 hover:text-quantum-primary"
+                                  onClick={() => window.open(project.liveUrl, "_blank")}
+                                >
+                                  <ExternalLink size={16} />
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>View Live Demo</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          )}
+                          {project.githubUrl && (
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="p-2 hover:text-quantum-primary"
+                                  onClick={() => window.open(project.githubUrl, "_blank")}
+                                >
+                                  <Github size={16} />
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>View Source Code</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {categories.map((category) => (
+              <Tooltip key={category.id}>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => setActiveCategory(category.id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                      activeCategory === category.id
+                        ? "bg-gradient-to-r from-quantum-primary to-quantum-secondary text-quantum-dark quantum-glow"
+                        : "bg-quantum-card border border-quantum-border text-quantum-muted hover:border-quantum-primary hover:text-quantum-light"
+                    }`}
+                  >
+                    <Code2 className="w-4 h-4" />
+                    {category.label}
+                    <Badge variant="secondary" className="ml-2 bg-quantum-border text-quantum-muted text-xs">
+                      {category.count}
+                    </Badge>
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Filter by {category.label.toLowerCase()}</p>
+                </TooltipContent>
+              </Tooltip>
+            ))}
+          </div>
+
+          {/* All Projects Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProjects.map((project) => (
               <Card
                 key={project.id}
                 className="group bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:quantum-glow overflow-hidden cursor-pointer"
               >
                 <div className="relative">
-                  <div
-                    className="w-full h-48 bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
-                    style={{ backgroundImage: `url(${project.image || "/placeholder.svg"})` }}
-                  />
+                  <div className="w-full h-48 relative overflow-hidden">
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={`${project.title} screenshot`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </div>
                   <div className="absolute top-4 left-4">
                     <Badge className={`${getStatusColor(project.status)} text-xs font-medium`}>
                       {getStatusLabel(project.status)}
                     </Badge>
                   </div>
-                  <div className="absolute top-4 right-4">
-                    <Badge variant="secondary" className="bg-quantum-primary/20 text-quantum-primary text-xs">
-                      Featured
-                    </Badge>
-                  </div>
+                  {project.featured && (
+                    <div className="absolute top-4 right-4">
+                      <Badge variant="secondary" className="bg-quantum-primary/20 text-quantum-primary text-xs">
+                        <Star className="w-3 h-3 mr-1" />
+                        Featured
+                      </Badge>
+                    </div>
+                  )}
                 </div>
 
                 <div className="p-6 space-y-4">
                   <div>
-                    <h4 className="text-xl font-semibold text-quantum-light group-hover:quantum-gradient-text transition-all duration-200">
+                    <h4 className="text-lg font-semibold text-quantum-light group-hover:quantum-gradient-text transition-all duration-200">
                       {project.title}
                     </h4>
-                    <p className="text-quantum-muted mt-2">{project.description}</p>
+                    <p className="text-quantum-muted mt-2 text-sm">{project.description}</p>
+                    {project.pushedAt && (
+                      <p className="text-xs text-quantum-subtle mt-1">Last updated: {formatDate(project.pushedAt)}</p>
+                    )}
                   </div>
 
                   <div className="flex flex-wrap gap-2">
@@ -218,30 +482,36 @@ export function ProjectsSection() {
                   </div>
 
                   <div className="flex items-center justify-between pt-4">
-                    <div className="flex items-center space-x-4 text-sm text-quantum-muted">
+                    <div className="flex items-center space-x-3 text-sm text-quantum-muted">
                       <div className="flex items-center space-x-1">
-                        <Star size={14} />
+                        <Star size={12} />
                         <span>{project.stats.stars}</span>
                       </div>
                       <div className="flex items-center space-x-1">
-                        <GitFork size={14} />
+                        <GitFork size={12} />
                         <span>{project.stats.forks}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Eye size={14} />
-                        <span>{project.stats.views}</span>
                       </div>
                     </div>
 
                     <div className="flex space-x-2">
                       {project.liveUrl && (
-                        <Button size="sm" variant="ghost" className="p-2 hover:text-quantum-primary">
-                          <ExternalLink size={16} />
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="p-2 hover:text-quantum-primary"
+                          onClick={() => window.open(project.liveUrl, "_blank")}
+                        >
+                          <ExternalLink size={14} />
                         </Button>
                       )}
                       {project.githubUrl && (
-                        <Button size="sm" variant="ghost" className="p-2 hover:text-quantum-primary">
-                          <Github size={16} />
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="p-2 hover:text-quantum-primary"
+                          onClick={() => window.open(project.githubUrl, "_blank")}
+                        >
+                          <Github size={14} />
                         </Button>
                       )}
                     </div>
@@ -250,139 +520,42 @@ export function ProjectsSection() {
               </Card>
             ))}
           </div>
-        </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setActiveCategory(category.id)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                activeCategory === category.id
-                  ? "bg-gradient-to-r from-quantum-primary to-quantum-secondary text-quantum-dark quantum-glow"
-                  : "bg-quantum-card border border-quantum-border text-quantum-muted hover:border-quantum-primary hover:text-quantum-light"
-              }`}
-            >
-              {category.label}
-              <Badge variant="secondary" className="ml-2 bg-quantum-border text-quantum-muted text-xs">
-                {category.count}
-              </Badge>
-            </button>
-          ))}
-        </div>
-
-        {/* All Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project) => (
-            <Card
-              key={project.id}
-              className="group bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:quantum-glow overflow-hidden cursor-pointer"
-            >
-              <div className="relative">
-                <div
-                  className="w-full h-48 bg-cover bg-center group-hover:scale-105 transition-transform duration-300"
-                  style={{ backgroundImage: `url(${project.image || "/placeholder.svg"})` }}
-                />
-                <div className="absolute top-4 left-4">
-                  <Badge className={`${getStatusColor(project.status)} text-xs font-medium`}>
-                    {getStatusLabel(project.status)}
-                  </Badge>
-                </div>
-                {project.featured && (
-                  <div className="absolute top-4 right-4">
-                    <Badge variant="secondary" className="bg-quantum-primary/20 text-quantum-primary text-xs">
-                      Featured
-                    </Badge>
-                  </div>
-                )}
-              </div>
-
-              <div className="p-6 space-y-4">
-                <div>
-                  <h4 className="text-lg font-semibold text-quantum-light group-hover:quantum-gradient-text transition-all duration-200">
-                    {project.title}
-                  </h4>
-                  <p className="text-quantum-muted mt-2 text-sm">{project.description}</p>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.slice(0, 3).map((tech) => (
-                    <Badge key={tech} variant="secondary" className="bg-quantum-border text-quantum-muted text-xs">
-                      {tech}
-                    </Badge>
-                  ))}
-                  {project.technologies.length > 3 && (
-                    <Badge variant="secondary" className="bg-quantum-border text-quantum-muted text-xs">
-                      +{project.technologies.length - 3}
-                    </Badge>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between pt-4">
-                  <div className="flex items-center space-x-3 text-sm text-quantum-muted">
-                    <div className="flex items-center space-x-1">
-                      <Star size={12} />
-                      <span>{project.stats.stars}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <GitFork size={12} />
-                      <span>{project.stats.forks}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex space-x-2">
-                    {project.liveUrl && (
-                      <Button size="sm" variant="ghost" className="p-2 hover:text-quantum-primary">
-                        <ExternalLink size={14} />
-                      </Button>
-                    )}
-                    {project.githubUrl && (
-                      <Button size="sm" variant="ghost" className="p-2 hover:text-quantum-primary">
-                        <Github size={14} />
-                      </Button>
-                    )}
-                  </div>
-                </div>
+          {/* Project Stats */}
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-6">
+            <Card className="p-6 bg-quantum-card border-quantum-border text-center hover:scale-105 transition-transform duration-300">
+              <div className="space-y-2">
+                <div className="text-3xl font-bold quantum-gradient-text">{projects.length}</div>
+                <div className="text-quantum-muted">Total Projects</div>
               </div>
             </Card>
-          ))}
+            <Card className="p-6 bg-quantum-card border-quantum-border text-center hover:scale-105 transition-transform duration-300">
+              <div className="space-y-2">
+                <div className="text-3xl font-bold quantum-gradient-text">
+                  {projects.reduce((acc, p) => acc + p.stats.stars, 0)}
+                </div>
+                <div className="text-quantum-muted">GitHub Stars</div>
+              </div>
+            </Card>
+            <Card className="p-6 bg-quantum-card border-quantum-border text-center hover:scale-105 transition-transform duration-300">
+              <div className="space-y-2">
+                <div className="text-3xl font-bold quantum-gradient-text">
+                  {projects.filter((p) => p.status === "completed").length}
+                </div>
+                <div className="text-quantum-muted">Completed</div>
+              </div>
+            </Card>
+            <Card className="p-6 bg-quantum-card border-quantum-border text-center hover:scale-105 transition-transform duration-300">
+              <div className="space-y-2">
+                <div className="text-3xl font-bold quantum-gradient-text">
+                  {projects.reduce((acc, p) => acc + p.stats.views, 0)}
+                </div>
+                <div className="text-quantum-muted">Total Views</div>
+              </div>
+            </Card>
+          </div>
         </div>
-
-        {/* Project Stats */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="p-6 bg-quantum-card border-quantum-border text-center">
-            <div className="space-y-2">
-              <div className="text-3xl font-bold quantum-gradient-text">{projects.length}</div>
-              <div className="text-quantum-muted">Total Projects</div>
-            </div>
-          </Card>
-          <Card className="p-6 bg-quantum-card border-quantum-border text-center">
-            <div className="space-y-2">
-              <div className="text-3xl font-bold quantum-gradient-text">
-                {projects.reduce((acc, p) => acc + p.stats.stars, 0)}
-              </div>
-              <div className="text-quantum-muted">GitHub Stars</div>
-            </div>
-          </Card>
-          <Card className="p-6 bg-quantum-card border-quantum-border text-center">
-            <div className="space-y-2">
-              <div className="text-3xl font-bold quantum-gradient-text">
-                {projects.filter((p) => p.status === "completed").length}
-              </div>
-              <div className="text-quantum-muted">Completed</div>
-            </div>
-          </Card>
-          <Card className="p-6 bg-quantum-card border-quantum-border text-center">
-            <div className="space-y-2">
-              <div className="text-3xl font-bold quantum-gradient-text">
-                {projects.reduce((acc, p) => acc + p.stats.views, 0)}
-              </div>
-              <div className="text-quantum-muted">Total Views</div>
-            </div>
-          </Card>
-        </div>
-      </div>
-    </section>
+      </section>
+    </TooltipProvider>
   )
 }

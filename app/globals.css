@@ -3,121 +3,198 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Quantum Professional Theme Variables */
+/* Modern Professional Design System */
 :root {
-  /* Quantum Dark Palette */
+  /* Core Dark Palette - Enhanced for Modern Aesthetic */
   --quantum-dark: #0a0a0f;
   --quantum-darker: #050508;
   --quantum-card: #111118;
   --quantum-border: #1a1a24;
+  --quantum-surface: #0f0f14;
+  --quantum-elevated: #1c1c28;
 
-  /* Quantum Light Palette */
-  --quantum-light: #e8e8f0;
-  --quantum-muted: #a0a0b0;
-  --quantum-subtle: #70707d;
+  /* Light Palette - Refined for Better Contrast */
+  --quantum-light: #ffffff;
+  --quantum-muted: #a1a1aa;
+  --quantum-subtle: #71717a;
+  --quantum-soft: #f4f4f5;
 
-  /* Quantum Accent Colors */
-  --quantum-primary: #00d4ff;
-  --quantum-secondary: #7c3aed;
+  /* Modern Accent System */
+  --quantum-primary: #8b5cf6;
+  --quantum-secondary: #6366f1;
   --quantum-accent: #10b981;
+  --quantum-emerald: #059669;
+  --quantum-purple: #7c3aed;
+  --quantum-cyan: #06b6d4;
   --quantum-warning: #f59e0b;
   --quantum-danger: #ef4444;
+  --quantum-success: #22c55e;
 
-  /* Quantum Gradients */
-  --quantum-gradient-primary: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
-  --quantum-gradient-secondary: linear-gradient(135deg, #10b981 0%, #00d4ff 100%);
-  --quantum-gradient-accent: linear-gradient(135deg, #7c3aed 0%, #10b981 100%);
+  /* Modern Gradient System */
+  --quantum-gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  --quantum-gradient-secondary: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  --quantum-gradient-accent: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+  --quantum-gradient-emerald: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  --quantum-gradient-modern: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+  --quantum-gradient-surface: linear-gradient(135deg, #111118 0%, #1c1c28 100%);
+
+  /* Typography Scale */
+  --quantum-text-xs: 0.75rem;
+  --quantum-text-sm: 0.875rem;
+  --quantum-text-base: 1rem;
+  --quantum-text-lg: 1.125rem;
+  --quantum-text-xl: 1.25rem;
+  --quantum-text-2xl: 1.5rem;
+  --quantum-text-3xl: 1.875rem;
+  --quantum-text-4xl: 2.25rem;
+  --quantum-text-5xl: 3rem;
+
+  /* Spacing Scale */
+  --quantum-space-1: 0.25rem;
+  --quantum-space-2: 0.5rem;
+  --quantum-space-3: 0.75rem;
+  --quantum-space-4: 1rem;
+  --quantum-space-6: 1.5rem;
+  --quantum-space-8: 2rem;
+  --quantum-space-12: 3rem;
+  --quantum-space-16: 4rem;
+  --quantum-space-20: 5rem;
+  --quantum-space-24: 6rem;
+
+  /* Border Radius Scale */
+  --quantum-radius-sm: 0.375rem;
+  --quantum-radius-md: 0.5rem;
+  --quantum-radius-lg: 0.75rem;
+  --quantum-radius-xl: 1rem;
+  --quantum-radius-2xl: 1.5rem;
+  --quantum-radius-full: 9999px;
+
+  /* Shadow System */
+  --quantum-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --quantum-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --quantum-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --quantum-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --quantum-shadow-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+  --quantum-shadow-glow-accent: 0 0 20px rgba(16, 185, 129, 0.3);
 
   /* Original shadcn variables for compatibility */
   --background: var(--quantum-dark);
   --foreground: var(--quantum-light);
   --card: var(--quantum-card);
   --card-foreground: var(--quantum-light);
-  --popover: var(--quantum-card);
+  --popover: var(--quantum-elevated);
   --popover-foreground: var(--quantum-light);
   --primary: var(--quantum-primary);
-  --primary-foreground: var(--quantum-dark);
-  --secondary: var(--quantum-card);
+  --primary-foreground: var(--quantum-light);
+  --secondary: var(--quantum-elevated);
   --secondary-foreground: var(--quantum-light);
-  --muted: var(--quantum-card);
+  --muted: var(--quantum-surface);
   --muted-foreground: var(--quantum-muted);
-  --accent: var(--quantum-card);
+  --accent: var(--quantum-accent);
   --accent-foreground: var(--quantum-light);
   --destructive: var(--quantum-danger);
   --destructive-foreground: var(--quantum-light);
   --border: var(--quantum-border);
-  --input: var(--quantum-border);
+  --input: var(--quantum-elevated);
   --ring: var(--quantum-primary);
   --chart-1: var(--quantum-primary);
   --chart-2: var(--quantum-secondary);
   --chart-3: var(--quantum-accent);
   --chart-4: var(--quantum-warning);
   --chart-5: var(--quantum-danger);
-  --radius: 0.75rem;
-  --sidebar: #e8e8f0;
-  --sidebar-foreground: #0a0a0f;
-  --sidebar-primary: #00d4ff;
-  --sidebar-primary-foreground: #0a0a0f;
-  --sidebar-accent: #10b981;
-  --sidebar-accent-foreground: #0a0a0f;
-  --sidebar-border: #1a1a24;
-  --sidebar-ring: #00d4ff;
+  --radius: var(--quantum-radius-lg);
+  --sidebar: var(--quantum-surface);
+  --sidebar-foreground: var(--quantum-light);
+  --sidebar-primary: var(--quantum-primary);
+  --sidebar-primary-foreground: var(--quantum-light);
+  --sidebar-accent: var(--quantum-accent);
+  --sidebar-accent-foreground: var(--quantum-light);
+  --sidebar-border: var(--quantum-border);
+  --sidebar-ring: var(--quantum-primary);
 }
 
 .dark {
-  --background: #0a0a0f;
-  --foreground: #e8e8f0;
-  --card: #111118;
-  --card-foreground: #e8e8f0;
-  --popover: #111118;
-  --popover-foreground: #e8e8f0;
-  --primary: #e8e8f0;
-  --primary-foreground: #0a0a0f;
-  --secondary: #1a1a24;
-  --secondary-foreground: #e8e8f0;
-  --muted: #1a1a24;
-  --muted-foreground: #a0a0b0;
-  --accent: #1a1a24;
-  --accent-foreground: #e8e8f0;
-  --destructive: #ef4444;
-  --destructive-foreground: #f59e0b;
-  --border: #1a1a24;
-  --input: #1a1a24;
-  --ring: #00d4ff;
-  --chart-1: #00d4ff;
-  --chart-2: #7c3aed;
-  --chart-3: #10b981;
-  --chart-4: #f59e0b;
-  --chart-5: #ef4444;
-  --radius: 0.75rem;
-  --sidebar: #0a0a0f;
-  --sidebar-foreground: #e8e8f0;
-  --sidebar-primary: #00d4ff;
-  --sidebar-primary-foreground: #e8e8f0;
-  --sidebar-accent: #10b981;
-  --sidebar-accent-foreground: #e8e8f0;
-  --sidebar-border: #1a1a24;
-  --sidebar-ring: #00d4ff;
+  --background: var(--quantum-dark);
+  --foreground: var(--quantum-light);
+  --card: var(--quantum-card);
+  --card-foreground: var(--quantum-light);
+  --popover: var(--quantum-elevated);
+  --popover-foreground: var(--quantum-light);
+  --primary: var(--quantum-primary);
+  --primary-foreground: var(--quantum-light);
+  --secondary: var(--quantum-elevated);
+  --secondary-foreground: var(--quantum-light);
+  --muted: var(--quantum-surface);
+  --muted-foreground: var(--quantum-muted);
+  --accent: var(--quantum-accent);
+  --accent-foreground: var(--quantum-light);
+  --destructive: var(--quantum-danger);
+  --destructive-foreground: var(--quantum-light);
+  --border: var(--quantum-border);
+  --input: var(--quantum-elevated);
+  --ring: var(--quantum-primary);
+  --chart-1: var(--quantum-primary);
+  --chart-2: var(--quantum-secondary);
+  --chart-3: var(--quantum-accent);
+  --chart-4: var(--quantum-warning);
+  --chart-5: var(--quantum-danger);
+  --radius: var(--quantum-radius-lg);
+  --sidebar: var(--quantum-surface);
+  --sidebar-foreground: var(--quantum-light);
+  --sidebar-primary: var(--quantum-primary);
+  --sidebar-primary-foreground: var(--quantum-light);
+  --sidebar-accent: var(--quantum-accent);
+  --sidebar-accent-foreground: var(--quantum-light);
+  --sidebar-border: var(--quantum-border);
+  --sidebar-ring: var(--quantum-primary);
 }
 
 @theme inline {
-  /* Quantum Color System */
+  /* Modern Color System */
   --color-quantum-dark: var(--quantum-dark);
   --color-quantum-darker: var(--quantum-darker);
   --color-quantum-card: var(--quantum-card);
   --color-quantum-border: var(--quantum-border);
+  --color-quantum-surface: var(--quantum-surface);
+  --color-quantum-elevated: var(--quantum-elevated);
   --color-quantum-light: var(--quantum-light);
   --color-quantum-muted: var(--quantum-muted);
   --color-quantum-subtle: var(--quantum-subtle);
+  --color-quantum-soft: var(--quantum-soft);
   --color-quantum-primary: var(--quantum-primary);
   --color-quantum-secondary: var(--quantum-secondary);
   --color-quantum-accent: var(--quantum-accent);
+  --color-quantum-emerald: var(--quantum-emerald);
+  --color-quantum-purple: var(--quantum-purple);
+  --color-quantum-cyan: var(--quantum-cyan);
   --color-quantum-warning: var(--quantum-warning);
   --color-quantum-danger: var(--quantum-danger);
+  --color-quantum-success: var(--quantum-success);
 
-  /* Font System */
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-jetbrains-mono);
+  /* Typography System */
+  --font-sans: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
+
+  /* Spacing System */
+  --space-1: var(--quantum-space-1);
+  --space-2: var(--quantum-space-2);
+  --space-3: var(--quantum-space-3);
+  --space-4: var(--quantum-space-4);
+  --space-6: var(--quantum-space-6);
+  --space-8: var(--quantum-space-8);
+  --space-12: var(--quantum-space-12);
+  --space-16: var(--quantum-space-16);
+  --space-20: var(--quantum-space-20);
+  --space-24: var(--quantum-space-24);
+
+  /* Border Radius System */
+  --radius-sm: var(--quantum-radius-sm);
+  --radius-md: var(--quantum-radius-md);
+  --radius-lg: var(--quantum-radius-lg);
+  --radius-xl: var(--quantum-radius-xl);
+  --radius-2xl: var(--quantum-radius-2xl);
+  --radius-full: var(--quantum-radius-full);
 
   /* Original shadcn compatibility */
   --color-background: var(--background);
@@ -144,10 +221,6 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -158,56 +231,115 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Quantum Professional Base Styles */
+/* Modern Professional Base Styles */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
 
-  body {
-    @apply bg-background text-foreground font-sans;
-    background-image: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 4rem;
   }
 
-  /* Quantum Scrollbar */
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-image: radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
+      linear-gradient(180deg, var(--quantum-dark) 0%, var(--quantum-darker) 100%);
+    background-attachment: fixed;
+  }
+
+  /* Modern Typography Scale */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-bold tracking-tight;
+    line-height: 1.2;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+
+  /* Modern Scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-quantum-darker;
+    @apply bg-quantum-surface;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-quantum-primary/30 rounded-full;
+    @apply bg-quantum-primary/40 rounded-full;
+    transition: background-color 0.2s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-quantum-primary/50;
+    @apply bg-quantum-primary/60;
   }
 
-  /* Quantum Selection */
+  ::-webkit-scrollbar-corner {
+    @apply bg-quantum-surface;
+  }
+
+  /* Modern Selection */
   ::selection {
     @apply bg-quantum-primary/20 text-quantum-light;
   }
+
+  /* Focus Styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-quantum-primary/50 ring-offset-2 ring-offset-quantum-dark;
+  }
 }
 
-/* Quantum Animation Utilities */
+/* Modern Animation & Utility System */
 @layer utilities {
+  /* Glow Effects */
   .quantum-glow {
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    box-shadow: var(--quantum-shadow-glow);
   }
 
   .quantum-glow-secondary {
-    box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
   }
 
   .quantum-glow-accent {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    box-shadow: var(--quantum-shadow-glow-accent);
   }
 
+  .quantum-glow-emerald {
+    box-shadow: 0 0 20px rgba(5, 150, 105, 0.3);
+  }
+
+  .quantum-glow-cyan {
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+  }
+
+  /* Modern Gradient Text */
   .quantum-gradient-text {
     background: var(--quantum-gradient-primary);
     -webkit-background-clip: text;
@@ -215,48 +347,228 @@
     background-clip: text;
   }
 
-  .quantum-border-gradient {
-    border-image: var(--quantum-gradient-primary) 1;
+  .quantum-gradient-text-modern {
+    background: var(--quantum-gradient-modern);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  @keyframes quantum-pulse {
+  .quantum-gradient-text-emerald {
+    background: var(--quantum-gradient-emerald);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .quantum-gradient-text-accent {
+    background: var(--quantum-gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Modern Surface Styles */
+  .quantum-surface {
+    @apply bg-quantum-surface border border-quantum-border;
+  }
+
+  .quantum-elevated {
+    @apply bg-quantum-elevated border border-quantum-border;
+    box-shadow: var(--quantum-shadow-lg);
+  }
+
+  .quantum-glass {
+    @apply bg-quantum-card/80 backdrop-blur-xl border border-quantum-border/50;
+  }
+
+  /* Modern Button Styles */
+  .quantum-button-primary {
+    @apply bg-gradient-to-r from-quantum-primary to-quantum-secondary text-quantum-light;
+    @apply hover:from-quantum-primary/90 hover:to-quantum-secondary/90;
+    @apply transition-all duration-200 quantum-glow;
+  }
+
+  .quantum-button-ghost {
+    @apply bg-transparent border border-quantum-border text-quantum-muted;
+    @apply hover:bg-quantum-surface hover:text-quantum-light hover:border-quantum-primary/50;
+    @apply transition-all duration-200;
+  }
+
+  /* Modern Card Styles */
+  .quantum-card {
+    @apply bg-quantum-card border border-quantum-border rounded-xl;
+    @apply hover:border-quantum-primary/30 transition-all duration-300;
+    box-shadow: var(--quantum-shadow-md);
+  }
+
+  .quantum-card-elevated {
+    @apply quantum-card;
+    box-shadow: var(--quantum-shadow-xl);
+  }
+
+  .quantum-card-interactive {
+    @apply quantum-card cursor-pointer;
+    @apply hover:scale-[1.02] hover:quantum-glow;
+  }
+
+  /* Modern Animations */
+  @keyframes quantum-pulse-modern {
     0%,
     100% {
       opacity: 1;
+      transform: scale(1);
     }
     50% {
-      opacity: 0.5;
+      opacity: 0.8;
+      transform: scale(1.05);
     }
   }
 
-  @keyframes quantum-float {
+  @keyframes quantum-float-modern {
     0%,
     100% {
-      transform: translateY(0px);
+      transform: translateY(0px) rotate(0deg);
     }
-    50% {
-      transform: translateY(-10px);
+    33% {
+      transform: translateY(-10px) rotate(1deg);
+    }
+    66% {
+      transform: translateY(-5px) rotate(-1deg);
     }
   }
 
-  @keyframes quantum-rotate {
+  @keyframes quantum-slide-up {
     from {
-      transform: rotate(0deg);
+      opacity: 0;
+      transform: translateY(20px);
     }
     to {
-      transform: rotate(360deg);
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
-  .animate-quantum-pulse {
-    animation: quantum-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  @keyframes quantum-slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
-  .animate-quantum-float {
-    animation: quantum-float 3s ease-in-out infinite;
+  @keyframes quantum-scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
-  .animate-quantum-rotate {
-    animation: quantum-rotate 20s linear infinite;
+  @keyframes quantum-glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+    }
+  }
+
+  /* Animation Classes */
+  .animate-quantum-pulse-modern {
+    animation: quantum-pulse-modern 3s ease-in-out infinite;
+  }
+
+  .animate-quantum-float-modern {
+    animation: quantum-float-modern 4s ease-in-out infinite;
+  }
+
+  .animate-quantum-slide-up {
+    animation: quantum-slide-up 0.6s ease-out;
+  }
+
+  .animate-quantum-slide-in {
+    animation: quantum-slide-in 0.6s ease-out;
+  }
+
+  .animate-quantum-scale-in {
+    animation: quantum-scale-in 0.4s ease-out;
+  }
+
+  .animate-quantum-glow-pulse {
+    animation: quantum-glow-pulse 2s ease-in-out infinite;
+  }
+
+  /* Modern Spacing Utilities */
+  .quantum-section-padding {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+
+  .quantum-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .quantum-grid {
+    @apply grid gap-6 md:gap-8 lg:gap-12;
+  }
+
+  /* Modern Text Utilities */
+  .quantum-text-balance {
+    text-wrap: balance;
+  }
+
+  .quantum-text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Modern Interactive States */
+  .quantum-interactive {
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .quantum-focus {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-quantum-primary/50;
+    @apply focus-visible:ring-offset-2 focus-visible:ring-offset-quantum-dark;
+  }
+}
+
+/* Modern Component Patterns */
+@layer components {
+  .quantum-hero-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--quantum-dark) 0%,
+      var(--quantum-surface) 25%,
+      var(--quantum-elevated) 50%,
+      var(--quantum-surface) 75%,
+      var(--quantum-dark) 100%
+    );
+  }
+
+  .quantum-section-gradient {
+    background: linear-gradient(180deg, transparent 0%, var(--quantum-surface) 50%, transparent 100%);
+  }
+
+  .quantum-border-gradient {
+    position: relative;
+  }
+
+  .quantum-border-gradient::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: var(--quantum-gradient-primary);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
   }
 }

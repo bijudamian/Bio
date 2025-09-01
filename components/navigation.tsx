@@ -3,16 +3,18 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Circle } from "lucide-react"
+import { useUser, UserButton } from "@clerk/nextjs"
 
 interface NavigationProps {
-  onCycleVisualization: () => void;
+  onCycleVisualization: () => void
 }
 
 export function Navigation({ onCycleVisualization }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
-  const [isOnline] = useState(true)
   const [visitedSections, setVisitedSections] = useState<string[]>(["home"])
+  const { user, isSignedIn } = useUser()
+  const [isOnline] = useState(true)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,7 +37,7 @@ export function Navigation({ onCycleVisualization }: NavigationProps) {
           }
         })
       },
-      { root: null, rootMargin: "-80px 0px -50% 0px", threshold: 0 }
+      { root: null, rootMargin: "-80px 0px -50% 0px", threshold: 0 },
     )
     sections.forEach((section) => observer.observe(section))
     return () => sections.forEach((section) => observer.unobserve(section))
@@ -57,10 +59,9 @@ export function Navigation({ onCycleVisualization }: NavigationProps) {
     setActiveSection(sectionId)
   }
 
-  // This part is unchanged from the previous suggestion
   const openWhatsApp = () => {
     const whatsappUrl = `https://wa.me/918790882114?text=${encodeURIComponent(
-      "Hello Biju, I saw your portfolio and wanted to connect!"
+      "Hello Biju, I saw your portfolio and wanted to connect!",
     )}`
     window.open(whatsappUrl, "_blank", "noopener,noreferrer")
   }
@@ -75,16 +76,14 @@ export function Navigation({ onCycleVisualization }: NavigationProps) {
         <div className="flex items-center justify-between">
           {/* Logo with Online Status */}
           <div className="flex items-center space-x-3">
-            {/* THIS IS THE NEW BUTTON */}
             <button
               onClick={onCycleVisualization}
               className="w-8 h-8 bg-gradient-to-br from-quantum-primary to-quantum-secondary rounded-lg quantum-glow transition-transform duration-200 hover:scale-110 active:scale-105"
               aria-label="Change background visualization"
               title="Change Visualization"
             />
-            
-            <span className="text-xl font-bold quantum-gradient-text">Biju Damian </span>
-            {/* ... rest of the navigation is the same ... */}
+
+            <span className="text-xl font-bold quantum-gradient-text">Biju Damian</span>
             <div
               className="flex items-center space-x-2 px-3 py-1 rounded-full bg-quantum-card/50 border border-quantum-border"
               title={isOnline ? "I'm online!" : "Currently offline"}
@@ -117,13 +116,30 @@ export function Navigation({ onCycleVisualization }: NavigationProps) {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <Button
-            className="bg-gradient-to-r from-quantum-primary to-quantum-secondary hover:opacity-90 text-quantum-dark font-semibold px-6 py-2 rounded-lg transition-all duration-200 quantum-glow"
-            onClick={openWhatsApp}
-          >
-            Let&apos;s Connect
-          </Button>
+          {/* CTA Button and User Authentication */}
+          <div className="flex items-center space-x-4">
+            {isSignedIn ? (
+              <div className="flex items-center space-x-3">
+                <span className="text-sm text-quantum-muted">Welcome back!</span>
+                <UserButton
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-8 h-8 quantum-glow",
+                      userButtonPopoverCard: "bg-quantum-card border border-quantum-border",
+                      userButtonPopoverActionButton: "text-quantum-light hover:bg-quantum-darker",
+                    },
+                  }}
+                />
+              </div>
+            ) : (
+              <Button
+                className="bg-gradient-to-r from-quantum-primary to-quantum-secondary hover:opacity-90 text-quantum-dark font-semibold px-6 py-2 rounded-lg transition-all duration-200 quantum-glow"
+                onClick={openWhatsApp}
+              >
+                Let's Connect
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </nav>
