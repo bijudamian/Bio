@@ -1,326 +1,175 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* This is a v0-specific directive for theme handling. Keep it. */
 @custom-variant dark (&:is(.dark *));
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-@theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-
-  /* Quantum Design System Colors */
-  --quantum-primary: #8b5cf6;
-  --quantum-secondary: #6366f1;
-  --quantum-accent: #10b981;
-  --quantum-emerald: #059669;
-  --quantum-cyan: #06b6d4;
-  --quantum-warning: #f59e0b;
-  --quantum-danger: #ef4444;
-
-  /* Surface Colors */
-  --quantum-dark: #0a0a0f;
-  --quantum-darker: #111118;
-  --quantum-card: #1a1a24;
-  --quantum-surface: #232330;
-  --quantum-border: #2a2a3a;
-
-  /* Text Colors */
-  --quantum-light: #f8fafc;
-  --quantum-muted: #94a3b8;
-  --quantum-subtle: #64748b;
-
-  /* Shadow Variables */
-  --quantum-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --quantum-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --quantum-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-
-  /* shadcn/ui colors */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
 @layer base {
+  /* ======================================================================== */
+  /* 1. DEFINE THE CORE "QUANTUM" THEME VARIABLES                           */
+  /* This is the single source of truth for your design system.               */
+  /* ======================================================================== */
+  :root {
+    /* Quantum Design System: Accent & Brand Colors */
+    --quantum-primary: #8b5cf6;     /* violet-500 */
+    --quantum-secondary: #6366f1;   /* indigo-500 */
+    --quantum-accent: #10b981;      /* emerald-500 */
+    --quantum-emerald: #059669;    /* emerald-600 */
+    --quantum-cyan: #06b6d4;        /* cyan-500 */
+    --quantum-warning: #f59e0b;     /* amber-500 */
+    --quantum-danger: #ef4444;      /* red-500 */
+    
+    /* Quantum Design System: Surface & Background Colors */
+    --quantum-dark: #0a0a0f;
+    --quantum-darker: #111118;
+    --quantum-card: #1a1a24;
+    --quantum-surface: #232330;
+    --quantum-border: #2a2a3a;
+
+    /* Quantum Design System: Text Colors */
+    --quantum-light: #f8fafc;      /* slate-50 */
+    --quantum-muted: #94a3b8;      /* slate-400 */
+    --quantum-subtle: #64748b;     /* slate-500 */
+    
+    /* ======================================================================== */
+    /* 2. MAP QUANTUM VARIABLES TO TAILWIND/SHADCN THEME NAMES                */
+    /* This makes all shadcn/ui components automatically use your theme.      */
+    /* ======================================================================== */
+    --background: var(--quantum-dark);
+    --foreground: var(--quantum-light);
+
+    --card: var(--quantum-card);
+    --card-foreground: var(--quantum-light);
+
+    --popover: var(--quantum-card);
+    --popover-foreground: var(--quantum-light);
+
+    --primary: var(--quantum-primary);
+    --primary-foreground: var(--quantum-light);
+
+    --secondary: var(--quantum-secondary);
+    --secondary-foreground: var(--quantum-light);
+    
+    --muted: var(--quantum-surface);
+    --muted-foreground: var(--quantum-muted);
+
+    --accent: var(--quantum-accent);
+    --accent-foreground: var(--quantum-dark);
+
+    --destructive: var(--quantum-danger);
+    --destructive-foreground: var(--quantum-light);
+
+    --border: var(--quantum-border);
+    --input: var(--quantum-surface);
+    --ring: var(--quantum-primary);
+    
+    --radius: 0.625rem;
+  }
+
+  /* Your entire app is dark by default, so this can be empty */
+  .dark {
+  }
+
+  /* ======================================================================== */
+  /* 3. APPLY BASE STYLES                                                     */
+  /* ======================================================================== */
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    background: linear-gradient(135deg, var(--quantum-dark) 0%, var(--quantum-darker) 100%);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  /* Global Scrollbar & Selection Styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--quantum-darker);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--quantum-border);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--quantum-primary);
+  }
+
+  ::selection {
+    background: var(--quantum-primary);
+    color: white;
   }
 }
 
-/* Base Styles */
-* {
-  border-color: var(--quantum-border);
-}
-
-body {
-  background: linear-gradient(135deg, var(--quantum-dark) 0%, var(--quantum-darker) 100%);
-  color: var(--quantum-light);
-  font-family: var(--font-sans);
-  line-height: 1.6;
-}
-
-/* Quantum Gradient Text Effects */
-.quantum-gradient-text {
-  background: linear-gradient(135deg, var(--quantum-primary) 0%, var(--quantum-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.quantum-gradient-text-emerald {
-  background: linear-gradient(135deg, var(--quantum-emerald) 0%, var(--quantum-accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.quantum-gradient-text-modern {
-  background: linear-gradient(
-    135deg,
-    var(--quantum-primary) 0%,
-    var(--quantum-accent) 50%,
-    var(--quantum-secondary) 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Quantum Animations */
-@keyframes quantum-float {
-  0%,
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  33% {
-    transform: translateY(-10px) rotate(1deg);
-  }
-  66% {
-    transform: translateY(5px) rotate(-1deg);
-  }
-}
-
-@keyframes quantum-float-modern {
-  0%,
-  100% {
-    transform: translateY(0px) scale(1);
-  }
-  50% {
-    transform: translateY(-8px) scale(1.02);
-  }
-}
-
-@keyframes quantum-scale-in {
-  0% {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes quantum-slide-up {
-  0% {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes quantum-fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-/* Animation Classes */
-.animate-quantum-float {
-  animation: quantum-float 6s ease-in-out infinite;
-}
-
-.animate-quantum-float-modern {
-  animation: quantum-float-modern 4s ease-in-out infinite;
-}
-
-.animate-quantum-scale-in {
-  animation: quantum-scale-in 0.3s ease-out;
-}
-
-.animate-quantum-slide-up {
-  animation: quantum-slide-up 0.5s ease-out;
-}
-
-.animate-quantum-fade-in {
-  animation: quantum-fade-in 0.3s ease-out;
-}
-
-/* Quantum Component Styles */
-.quantum-button-primary {
-  @apply bg-gradient-to-r from-quantum-primary to-quantum-secondary text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 hover:opacity-90 shadow-lg;
-}
-
-.quantum-button-ghost {
-  @apply bg-transparent border border-quantum-border text-quantum-light hover:bg-quantum-card hover:border-quantum-primary transition-all duration-200;
-}
-
-.quantum-card-interactive {
-  @apply bg-quantum-card border border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:shadow-lg;
-}
-
-.quantum-glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.quantum-elevated {
-  @apply bg-quantum-card border border-quantum-border shadow-xl;
-}
-
-.quantum-interactive {
-  @apply transition-all duration-200 hover:scale-105 cursor-pointer;
-}
-
-/* Utility Classes */
-.quantum-section-padding {
-  @apply py-20 px-6;
-}
-
-.quantum-container {
-  @apply max-w-7xl mx-auto;
-}
-
-.quantum-grid {
-  @apply grid gap-6;
-}
-
-.quantum-text-balance {
-  text-wrap: balance;
-}
-
-.quantum-text-pretty {
-  text-wrap: pretty;
-}
-
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--quantum-darker);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--quantum-border);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--quantum-primary);
-}
-
-/* Selection Styling */
-::selection {
-  background: var(--quantum-primary);
-  color: white;
-}
-
-/* Focus Styles */
-:focus-visible {
-  outline: 2px solid var(--quantum-primary);
-  outline-offset: 2px;
-}
-
-/* Print Styles */
-@media print {
-  body {
-    background: white !important;
-    color: black !important;
+@layer utilities {
+  /* ======================================================================== */
+  /* 4. DEFINE CUSTOM UTILITY CLASSES & ANIMATIONS                          */
+  /* ======================================================================== */
+  
+  /* Quantum Gradient Text Effects */
+  .quantum-gradient-text {
+    background: linear-gradient(135deg, var(--quantum-primary) 0%, var(--quantum-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .quantum-gradient-text,
-  .quantum-gradient-text-emerald,
+  .quantum-gradient-text-emerald {
+    background: linear-gradient(135deg, var(--quantum-emerald) 0%, var(--quantum-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   .quantum-gradient-text-modern {
-    -webkit-text-fill-color: black !important;
-    background: none !important;
+    background: linear-gradient(135deg, var(--quantum-primary) 0%, var(--quantum-accent) 50%, var(--quantum-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Quantum Animations */
+  @keyframes quantum-float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(1deg); }
+    66% { transform: translateY(5px) rotate(-1deg); }
+  }
+
+  @keyframes quantum-float-modern {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-8px) scale(1.02); }
+  }
+
+  @keyframes quantum-scale-in {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes quantum-slide-up {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* Custom utility classes applying the animations */
+  .animate-quantum-float {
+    animation: quantum-float 6s ease-in-out infinite;
+  }
+  .animate-quantum-float-modern {
+    animation: quantum-float-modern 4s ease-in-out infinite;
+  }
+
+  /* Custom Component Styles */
+  .quantum-button-primary {
+    @apply bg-gradient-to-r from-quantum-primary to-quantum-secondary text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 hover:opacity-90 shadow-lg;
+  }
+  .quantum-button-ghost {
+    @apply bg-transparent border border-quantum-border text-quantum-light hover:bg-quantum-card hover:border-quantum-primary transition-all duration-200;
+  }
+  .quantum-card-interactive {
+    @apply bg-quantum-card border border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:shadow-lg;
   }
 }
