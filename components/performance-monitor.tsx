@@ -74,7 +74,7 @@ export function PerformanceMonitor() {
           // Achievement unlocked!
           const achievement = document.createElement("div")
           achievement.className =
-            "fixed top-4 right-4 z-50 p-4 bg-gradient-to-r from-quantum-primary to-quantum-secondary text-quantum-dark rounded-lg quantum-glow animate-bounce"
+            "fixed top-4 right-4 z-50 p-4 bg-gradient-to-r from-quantum-primary to-quantum-secondary text-quantum-dark rounded-lg shadow-lg shadow-purple-500/30 animate-bounce"
           achievement.innerHTML = "🎉 Achievement Unlocked: Konami Master!"
           document.body.appendChild(achievement)
           setTimeout(() => achievement.remove(), 3000)

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
-import { Code2, Database, Wrench, Star, Award, Target } from "lucide-react"
+import { Code2, Database, Wrench, Star, Award, Target, Bitcoin as Button } from "lucide-react"
 
 interface Skill {
   name: string
@@ -19,6 +19,8 @@ interface Skill {
 export function SkillsSection() {
   const [activeCategory, setActiveCategory] = useState<"all" | "Frontend" | "Backend" | "Tools">("all")
   const [isVisible, setIsVisible] = useState(false)
+  const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
+  const [showAllSkills, setShowAllSkills] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -213,7 +215,7 @@ export function SkillsSection() {
                     onClick={() => setActiveCategory(category)}
                     className={`flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-300 font-medium ${
                       activeCategory === category
-                        ? "bg-gradient-to-r from-quantum-emerald to-quantum-accent text-white shadow-lg shadow-quantum-emerald/30 scale-105 quantum-glow-emerald"
+                        ? "bg-gradient-to-r from-quantum-emerald to-quantum-accent text-white shadow-lg shadow-quantum-emerald/30 scale-105"
                         : "bg-quantum-card text-quantum-muted hover:bg-quantum-emerald/10 hover:text-quantum-emerald hover:scale-105 border border-quantum-border hover:border-quantum-emerald/30"
                     }`}
                   >
@@ -242,10 +244,11 @@ export function SkillsSection() {
               <Tooltip key={skill.name}>
                 <TooltipTrigger asChild>
                   <Card
-                    className={`group cursor-pointer transition-all duration-500 hover:scale-105 bg-quantum-card border-quantum-border hover:border-quantum-emerald/50 hover:shadow-2xl hover:shadow-quantum-emerald/20 ${
+                    className={`group cursor-pointer transition-all duration-500 hover:scale-105 bg-quantum-card border-quantum-border hover:border-quantum-accent hover:shadow-lg hover:shadow-emerald-500/30 ${
                       isVisible ? "animate-in slide-in-from-bottom-4" : "opacity-0"
                     }`}
                     style={{ animationDelay: `${index * 100}ms` }}
+                    onClick={() => setSelectedSkill(selectedSkill === skill.name ? null : skill.name)}
                   >
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-4">
@@ -279,7 +282,7 @@ export function SkillsSection() {
                           <div className="w-full bg-quantum-border rounded-full h-2 overflow-hidden">
                             <div
                               className={`h-full rounded-full bg-gradient-to-r ${skill.color} transition-all duration-1000 ease-out shadow-lg ${
-                                isVisible ? "animate-quantum-skill-glow" : ""
+                                isVisible ? "animate-pulse" : ""
                               }`}
                               style={{
                                 width: isVisible ? `${skill.level}%` : "0%",
@@ -314,7 +317,7 @@ export function SkillsSection() {
           </div>
 
           <div className="mt-20">
-            <Card className="p-8 bg-gradient-to-br from-quantum-card to-quantum-darker border-quantum-border hover:border-quantum-emerald/30 transition-all duration-300 quantum-glow-emerald">
+            <Card className="p-8 bg-gradient-to-br from-quantum-card to-quantum-darker border-quantum-border hover:border-quantum-emerald/30 transition-all duration-300">
               <div className="text-center mb-8">
                 <div className="flex justify-center mb-4">
                   <div className="w-20 h-20 rounded-full bg-gradient-to-br from-quantum-emerald to-quantum-accent flex items-center justify-center text-white text-2xl font-bold shadow-2xl">
@@ -483,6 +486,16 @@ export function SkillsSection() {
                 <p>Successfully delivered {totalProjects}+ projects across various domains</p>
               </TooltipContent>
             </Tooltip>
+          </div>
+
+          <div className="mt-8">
+            <Button
+              size="sm"
+              className="bg-gradient-to-r from-quantum-primary to-quantum-secondary text-quantum-dark hover:opacity-90 transition-all duration-200 shadow-lg shadow-purple-500/30"
+              onClick={() => setShowAllSkills(!showAllSkills)}
+            >
+              {showAllSkills ? "Show Less" : "Show All Skills"}
+            </Button>
           </div>
         </div>
       </section>

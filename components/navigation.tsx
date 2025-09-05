@@ -78,7 +78,7 @@ export function Navigation({ onCycleVisualization }: NavigationProps) {
           <div className="flex items-center space-x-3">
             <button
               onClick={onCycleVisualization}
-              className="w-8 h-8 bg-gradient-to-br from-quantum-primary to-quantum-secondary rounded-lg quantum-glow transition-transform duration-200 hover:scale-110 active:scale-105"
+              className="w-8 h-8 bg-gradient-to-br from-quantum-primary to-quantum-secondary rounded-lg shadow-lg shadow-purple-500/30 transition-transform duration-200 hover:scale-110 active:scale-105"
               aria-label="Change background visualization"
               title="Change Visualization"
             />
@@ -124,7 +124,7 @@ export function Navigation({ onCycleVisualization }: NavigationProps) {
                 <UserButton
                   appearance={{
                     elements: {
-                      avatarBox: "w-8 h-8 quantum-glow",
+                      avatarBox: "w-8 h-8 shadow-lg shadow-purple-500/30",
                       userButtonPopoverCard: "bg-quantum-card border border-quantum-border",
                       userButtonPopoverActionButton: "text-quantum-light hover:bg-quantum-darker",
                     },
@@ -133,7 +133,7 @@ export function Navigation({ onCycleVisualization }: NavigationProps) {
               </div>
             ) : (
               <Button
-                className="bg-gradient-to-r from-quantum-primary to-quantum-secondary hover:opacity-90 text-quantum-dark font-semibold px-6 py-2 rounded-lg transition-all duration-200 quantum-glow"
+                className="bg-gradient-to-r from-quantum-primary to-quantum-secondary hover:opacity-90 text-quantum-dark font-semibold px-6 py-2 rounded-lg transition-all duration-200 shadow-lg shadow-purple-500/30"
                 onClick={openWhatsApp}
               >
                 Let's Connect

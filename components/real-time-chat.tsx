@@ -166,7 +166,7 @@ export function RealTimeChat() {
             <TooltipTrigger asChild>
               <Button
                 onClick={() => setIsOpen(true)}
-                className="w-14 h-14 rounded-full bg-gradient-to-r from-quantum-primary to-quantum-secondary hover:opacity-90 shadow-2xl quantum-glow relative"
+                className="w-14 h-14 rounded-full bg-gradient-to-r from-quantum-primary to-quantum-secondary hover:opacity-90 shadow-2xl shadow-lg shadow-purple-500/30 relative"
               >
                 <MessageCircle className="w-6 h-6 text-quantum-dark" />
                 {unreadCount > 0 && (

@@ -126,7 +126,7 @@ export function ModernDesignShowcase() {
                   <TooltipTrigger asChild>
                     <Card
                       className={`quantum-card-interactive p-6 cursor-pointer ${
-                        activeDemo === element.id ? "quantum-glow border-quantum-primary" : ""
+                        activeDemo === element.id ? "shadow-lg shadow-purple-500/30 border-quantum-primary" : ""
                       }`}
                       onClick={() => setActiveDemo(activeDemo === element.id ? null : element.id)}
                     >
@@ -212,7 +212,7 @@ export function ModernDesignShowcase() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
-                  <div className="w-24 h-24 mx-auto mb-4 bg-quantum-card rounded-xl quantum-glow animate-quantum-glow-pulse"></div>
+                  <div className="w-24 h-24 mx-auto mb-4 bg-quantum-card rounded-xl shadow-lg shadow-purple-500/30 animate-pulse"></div>
                   <p className="font-medium text-quantum-light">Glow Effect</p>
                   <p className="text-sm text-quantum-muted">Subtle lighting</p>
                 </div>

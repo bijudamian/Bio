@@ -54,7 +54,7 @@ export function Footer() {
           {/* Brand Section */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-quantum-primary to-quantum-secondary rounded-lg quantum-glow"></div>
+              <div className="w-10 h-10 bg-gradient-to-br from-quantum-primary to-quantum-secondary rounded-lg shadow-lg shadow-purple-500/30"></div>
               <div>
                 <h3 className="text-xl font-bold quantum-gradient-text">Biju Damian</h3>
                 <p className="text-quantum-muted text-sm">Building the future, one line at a time</p>
@@ -62,7 +62,8 @@ export function Footer() {
             </div>
 
             <p className="text-quantum-muted leading-relaxed max-w-md">
-              Full-stack developer crafting digital experiences inspired by next-gen tech. Focused on building innovative solutions that stretch the limits of modern web development.
+              Full-stack developer crafting digital experiences inspired by next-gen tech. Focused on building
+              innovative solutions that stretch the limits of modern web development.
             </p>
 
             <div className="space-y-3">
@@ -110,7 +111,7 @@ export function Footer() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-lg bg-quantum-card border border-quantum-border flex items-center justify-center text-quantum-muted hover:text-quantum-primary hover:border-quantum-primary transition-all duration-200 hover:quantum-glow"
+                    className="w-10 h-10 rounded-lg bg-quantum-card border border-quantum-border flex items-center justify-center text-quantum-muted hover:text-quantum-primary hover:border-quantum-primary transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/30"
                     aria-label={label}
                   >
                     <Icon size={18} />
@@ -151,7 +152,7 @@ export function Footer() {
 
               <button
                 onClick={scrollToTop}
-                className="w-10 h-10 rounded-lg bg-quantum-card border border-quantum-border flex items-center justify-center text-quantum-muted hover:text-quantum-primary hover:border-quantum-primary transition-all duration-200 hover:quantum-glow"
+                className="w-10 h-10 rounded-lg bg-quantum-card border border-quantum-border flex items-center justify-center text-quantum-muted hover:text-quantum-primary hover:border-quantum-primary transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/30"
                 aria-label="Scroll to top"
               >
                 <ArrowUp size={18} />

@@ -222,7 +222,7 @@ export function ContactSection() {
         {showQuickPing && (
           <Card
             id="quick-ping"
-            className="mb-8 p-6 bg-gradient-to-r from-quantum-primary/10 to-quantum-secondary/10 border-quantum-primary/30 animate-quantum-glow"
+            className="mb-8 p-6 bg-gradient-to-r from-quantum-primary/10 to-quantum-secondary/10 border-quantum-primary/30 shadow-lg shadow-violet-500/30 animate-pulse"
           >
             <div className="flex items-center space-x-3 mb-4">
               <Zap className="text-quantum-primary animate-pulse" size={24} />
@@ -292,10 +292,10 @@ export function ContactSection() {
               {contactMethods.map(({ icon: Icon, label, value, href, description }) => (
                 <Card
                   key={label}
-                  className="p-6 bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-200 hover:quantum-glow group"
+                  className="p-6 bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-200 hover:shadow-lg hover:shadow-violet-500/30 group"
                 >
                   <a href={href} className="flex items-start space-x-4">
-                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-quantum-primary/20 to-quantum-secondary/20 flex items-center justify-center group-hover:quantum-glow-secondary transition-all duration-200">
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-quantum-primary/20 to-quantum-secondary/20 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-indigo-500/30 transition-all duration-200">
                       <Icon size={20} className="text-quantum-primary" />
                     </div>
                     <div className="flex-1">
@@ -320,7 +320,7 @@ export function ContactSection() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center space-x-3 p-4 rounded-lg bg-quantum-card border border-quantum-border hover:border-quantum-primary transition-all duration-200 hover:quantum-glow"
+                    className="group flex items-center space-x-3 p-4 rounded-lg bg-quantum-card border border-quantum-border hover:border-quantum-primary transition-all duration-200 hover:shadow-lg hover:shadow-violet-500/30"
                   >
                     <Icon size={20} className="text-quantum-primary" />
                     <div>
@@ -431,7 +431,7 @@ export function ContactSection() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-quantum-primary to-quantum-secondary hover:opacity-90 text-quantum-dark font-semibold py-3 rounded-lg transition-all duration-200 quantum-glow disabled:opacity-50"
+                className="w-full bg-gradient-to-r from-quantum-primary to-quantum-secondary hover:opacity-90 text-quantum-dark font-semibold py-3 rounded-lg transition-all duration-200 shadow-lg shadow-violet-500/30 disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <div className="flex items-center space-x-2">

@@ -45,6 +45,7 @@ export function ProjectsSection() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<string | null>(null)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   const fetchGitHubProjects = async () => {
     setLoading(true)
@@ -265,7 +266,8 @@ export function ProjectsSection() {
                 {featuredProjects.map((project) => (
                   <Card
                     key={project.id}
-                    className="group bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:quantum-glow overflow-hidden cursor-pointer"
+                    className="group cursor-pointer bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30 overflow-hidden"
+                    onClick={() => setSelectedProject(project)}
                   >
                     <div className="relative">
                       <div className="w-full h-48 relative overflow-hidden">
@@ -361,8 +363,11 @@ export function ProjectsSection() {
                                 <Button
                                   size="sm"
                                   variant="ghost"
-                                  className="p-2 hover:text-quantum-primary"
-                                  onClick={() => window.open(project.liveUrl, "_blank")}
+                                  className="p-2 hover:text-quantum-primary shadow-lg shadow-purple-500/30"
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    window.open(project.liveUrl, "_blank")
+                                  }}
                                 >
                                   <ExternalLink size={16} />
                                 </Button>
@@ -378,7 +383,7 @@ export function ProjectsSection() {
                                 <Button
                                   size="sm"
                                   variant="ghost"
-                                  className="p-2 hover:text-quantum-primary"
+                                  className="p-2 hover:text-quantum-primary shadow-lg shadow-purple-500/30"
                                   onClick={() => window.open(project.githubUrl, "_blank")}
                                 >
                                   <Github size={16} />
@@ -407,7 +412,7 @@ export function ProjectsSection() {
                     onClick={() => setActiveCategory(category.id)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                       activeCategory === category.id
-                        ? "bg-gradient-to-r from-quantum-primary to-quantum-secondary text-quantum-dark quantum-glow"
+                        ? "bg-gradient-to-r from-quantum-primary to-quantum-secondary text-quantum-dark shadow-lg shadow-purple-500/30"
                         : "bg-quantum-card border border-quantum-border text-quantum-muted hover:border-quantum-primary hover:text-quantum-light"
                     }`}
                   >
@@ -430,7 +435,8 @@ export function ProjectsSection() {
             {filteredProjects.map((project) => (
               <Card
                 key={project.id}
-                className="group bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:quantum-glow overflow-hidden cursor-pointer"
+                className="group cursor-pointer bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30 overflow-hidden"
+                onClick={() => setSelectedProject(project)}
               >
                 <div className="relative">
                   <div className="w-full h-48 relative overflow-hidden">
@@ -498,8 +504,11 @@ export function ProjectsSection() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="p-2 hover:text-quantum-primary"
-                          onClick={() => window.open(project.liveUrl, "_blank")}
+                          className="p-2 hover:text-quantum-primary shadow-lg shadow-purple-500/30"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            window.open(project.liveUrl, "_blank")
+                          }}
                         >
                           <ExternalLink size={14} />
                         </Button>
@@ -508,7 +517,7 @@ export function ProjectsSection() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="p-2 hover:text-quantum-primary"
+                          className="p-2 hover:text-quantum-primary shadow-lg shadow-purple-500/30"
                           onClick={() => window.open(project.githubUrl, "_blank")}
                         >
                           <Github size={14} />

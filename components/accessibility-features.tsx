@@ -80,7 +80,7 @@ export function AccessibilityFeatures() {
     return (
       <Button
         onClick={() => setIsVisible(true)}
-        className="fixed bottom-4 left-4 z-50 w-12 h-12 rounded-full bg-quantum-card border border-quantum-border hover:border-quantum-primary transition-all duration-200 hover:quantum-glow"
+        className="fixed bottom-4 left-4 z-50 w-12 h-12 rounded-full bg-quantum-card border border-quantum-border hover:border-quantum-primary transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/30"
         aria-label="Open accessibility options"
       >
         <Eye size={20} className="text-quantum-primary" />
