@@ -212,7 +212,17 @@ export function ContactSection() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="quantum-gradient-text">Let's Connect</span>
+            <span
+              className="lets-connect-heading-override bg-gradient-to-r from-quantum-primary to-quantum-secondary bg-clip-text text-transparent"
+              style={{
+                color: "#00d4ff !important",
+                background: "linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%) !important",
+                WebkitBackgroundClip: "text !important",
+                WebkitTextFillColor: "transparent !important",
+              }}
+            >
+              Let's Connect
+            </span>
           </h2>
           <p className="text-xl text-quantum-muted max-w-3xl mx-auto">
             Ready to bring your ideas to life? Let's discuss how we can work together to create something extraordinary.

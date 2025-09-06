@@ -52,7 +52,12 @@ export default function RootLayout({
       <body className="min-h-screen bg-quantum-dark text-quantum-light antialiased overflow-x-hidden">
         <a
           href="#home"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 px-4 py-2 bg-quantum-primary text-quantum-dark rounded-lg font-medium"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 px-4 py-2 rounded-lg font-medium skip-link-override"
+          style={{
+            backgroundColor: "#00d4ff !important",
+            color: "#0a0a0f !important",
+            border: "2px solid #00d4ff !important",
+          }}
         >
           Skip to main content
         </a>

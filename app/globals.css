@@ -1,8 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
 
 @custom-variant dark (&:is(.dark *));
 
@@ -180,20 +177,22 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-quantum-darker;
+    background-color: var(--quantum-darker);
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-quantum-primary/30 rounded-full;
+    background-color: rgba(0, 212, 255, 0.3);
+    border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-quantum-primary/50;
+    background-color: rgba(0, 212, 255, 0.5);
   }
 
   /* Quantum Selection */
   ::selection {
-    @apply bg-quantum-primary/20 text-quantum-light;
+    background-color: rgba(0, 212, 255, 0.2);
+    color: #e8e8f0;
   }
 }
 
@@ -216,10 +215,52 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    color: #00d4ff; /* Added fallback color for accessibility */
   }
 
   .quantum-border-gradient {
     border-image: var(--quantum-gradient-primary) 1;
+  }
+
+  /* Added specific overrides for contrast issues */
+  .skip-link-override {
+    background-color: #00d4ff !important;
+    color: #0a0a0f !important;
+    border: 2px solid #00d4ff !important;
+  }
+
+  .skip-link-override:focus {
+    background-color: #00d4ff !important;
+    color: #0a0a0f !important;
+    border: 2px solid #00d4ff !important;
+  }
+
+  .view-work-button-override {
+    background-color: #00d4ff !important;
+    color: #0a0a0f !important;
+    border: none !important;
+  }
+
+  .view-work-button-override:hover {
+    background-color: #00b8e6 !important;
+    color: #0a0a0f !important;
+  }
+
+  .lets-connect-heading-override {
+    color: #00d4ff !important;
+    background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+
+  /* Force proper contrast for all buttons and links */
+  button[style*="background-color: #00d4ff"] {
+    color: #0a0a0f !important;
+  }
+
+  a[style*="background-color: #00d4ff"] {
+    color: #0a0a0f !important;
   }
 
   @keyframes quantum-pulse {
@@ -250,39 +291,6 @@
       transform: rotate(360deg);
     }
   }
-
-  @keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.animate-gradient {
-  background-size: 300% 300%;
-  animation: gradient-shift 6s ease infinite;
-}
-
-.text-3d {
-  display: inline-block;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-  transition: transform 0.4s ease, text-shadow 0.4s ease;
-}
-
-.text-3d:hover {
-  transform: rotateX(15deg) rotateY(-15deg) translateY(4px);
-  text-shadow: 0 10px 20px rgba(0,0,0,0.25);
-}
-
-.text-3d::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: translateZ(-20px);
-  color: rgba(0,0,0,0.25);
-  pointer-events: none;
-}
-
 
   .animate-quantum-pulse {
     animation: quantum-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
