@@ -13,27 +13,13 @@ import { Footer } from "@/components/footer"
 import { PerformanceMonitor } from "@/components/performance-monitor"
 import { AccessibilityFeatures } from "@/components/accessibility-features"
 import { LoadingScreen } from "@/components/loading-states"
-import { AdminPanel } from "@/components/admin-panel"
-import { RealTimeChat } from "@/components/real-time-chat"
-import { AdminChatPanel } from "@/components/admin-chat-panel"
-import { ModernDesignShowcase } from "@/components/modern-design-showcase"
-import { useUser } from "@clerk/nextjs"
 
-const visualizationTypes: VisualizationType[] = [
-  "neural",
-  "particles",
-  "waves",
-  "matrix",
-  "constellation",
-  "hyperspace",
-  "circuit",
-  "glitch",
-]
+const visualizationTypes: VisualizationType[] = ["neural", "particles", "waves", "matrix", "constellation", "hyperspace", "circuit", "glitch"]
 
 export default function HomePage() {
   // State is now managed by the parent component
   const [visualization, setVisualization] = useState<VisualizationType>(
-    () => visualizationTypes[Math.floor(Math.random() * visualizationTypes.length)],
+    () => visualizationTypes[Math.floor(Math.random() * visualizationTypes.length)]
   )
 
   // Function to cycle to the next visualization
@@ -45,8 +31,6 @@ export default function HomePage() {
     })
   }
 
-  const { isSignedIn, user } = useUser()
-
   return (
     <>
       <LoadingScreen />
@@ -56,9 +40,6 @@ export default function HomePage() {
         <AboutSection />
         <SkillsSection />
         <ProjectsSection />
-
-        {isSignedIn && <ModernDesignShowcase />}
-
         <ChatbotSection />
         <CtfSection />
         <ContactSection />
@@ -67,12 +48,6 @@ export default function HomePage() {
         {/* Performance & Accessibility Features */}
         <PerformanceMonitor />
         <AccessibilityFeatures />
-
-        {isSignedIn && <AdminPanel />}
-
-        {/* Real-time Chat System */}
-        <RealTimeChat />
-        {isSignedIn && <AdminChatPanel />}
       </main>
     </>
   )

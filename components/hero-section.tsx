@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react"
 
+
 // A more flexible particle type for different visualizations
 interface Particle {
   [key: string]: any // Allows for properties like x, y, z, vx, vy, speed, ttl, etc.
@@ -58,7 +59,7 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
     const colors = ["#00d4ff", "#7c3aed", "#10b981"]
     let animationId: number
     let time = 0
-    const particles: Particle[] = []
+    let particles: Particle[] = []
     let drops: number[] = []
 
     // --- Visualization Specific Setup ---
@@ -80,12 +81,9 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
     } else if (visualizationType === "circuit") {
       for (let i = 0; i < 70; i++) {
         particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: Math.random() < 0.5 ? 1 : -1,
-          vy: Math.random() < 0.5 ? 1 : -1,
-          size: Math.random() * 1.5 + 0.5,
-          speed: Math.random() * 2 + 1,
+          x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+          vx: Math.random() < 0.5 ? 1 : -1, vy: Math.random() < 0.5 ? 1 : -1,
+          size: Math.random() * 1.5 + 0.5, speed: Math.random() * 2 + 1,
           color: colors[Math.floor(Math.random() * colors.length)],
           direction: Math.random() < 0.5 ? "x" : "y",
           ttl: Math.random() * 100 + 50, // time-to-live before turning
@@ -93,17 +91,13 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
       }
     } else {
       const particleCount =
-        visualizationType === "neural"
-          ? 120
-          : visualizationType === "constellation"
-            ? 150
-            : visualizationType === "glitch"
-              ? 80
-              : 80 // Default for particles/waves
+        visualizationType === "neural" ? 120
+        : visualizationType === "constellation" ? 150
+        : visualizationType === "glitch" ? 80
+        : 80 // Default for particles/waves
       for (let i = 0; i < particleCount; i++) {
         particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
+          x: Math.random() * canvas.width, y: Math.random() * canvas.height,
           vx: (Math.random() - 0.5) * (visualizationType === "waves" ? 0.2 : 0.5),
           vy: (Math.random() - 0.5) * (visualizationType === "waves" ? 0.2 : 0.5),
           size: Math.random() * (visualizationType === "neural" || visualizationType === "glitch" ? 1.5 : 2.5) + 1,
@@ -130,59 +124,38 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
 
       if (visualizationType === "neural") {
         particles.forEach((p, i) => {
-          p.x += p.vx
-          p.y += p.vy
+          p.x += p.vx; p.y += p.vy
           if (p.x < 0 || p.x > canvas.width) p.vx *= -1
           if (p.y < 0 || p.y > canvas.height) p.vy *= -1
-          ctx.beginPath()
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-          ctx.fillStyle = `${p.color}${Math.floor(p.opacity * 255)
-            .toString(16)
-            .padStart(2, "0")}`
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+          ctx.fillStyle = `${p.color}${Math.floor(p.opacity * 255).toString(16).padStart(2, "0")}`
           ctx.fill()
           particles.slice(i + 1).forEach((other) => {
             const d = Math.sqrt((p.x - other.x) ** 2 + (p.y - other.y) ** 2)
             if (d < 120) {
-              ctx.beginPath()
-              ctx.moveTo(p.x, p.y)
-              ctx.lineTo(other.x, other.y)
-              ctx.strokeStyle = `${p.color}${Math.floor((1 - d / 120) * 0.3 * 255)
-                .toString(16)
-                .padStart(2, "0")}`
-              ctx.lineWidth = 0.5
-              ctx.stroke()
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(other.x, other.y)
+              ctx.strokeStyle = `${p.color}${Math.floor((1 - d / 120) * 0.3 * 255).toString(16).padStart(2, "0")}`
+              ctx.lineWidth = 0.5; ctx.stroke()
             }
           })
         })
       } else if (visualizationType === "particles") {
         particles.forEach((p) => {
-          p.x += p.vx
-          p.y += p.vy
-          p.opacity = 0.3 + Math.sin(time + p.x * 0.01) * 0.2
+          p.x += p.vx; p.y += p.vy; p.opacity = 0.3 + Math.sin(time + p.x * 0.01) * 0.2
           if (p.x < 0 || p.x > canvas.width) p.vx *= -1
           if (p.y < 0 || p.y > canvas.height) p.vy *= -1
           const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3)
-          g.addColorStop(
-            0,
-            `${p.color}${Math.floor(p.opacity * 255)
-              .toString(16)
-              .padStart(2, "0")}`,
-          )
+          g.addColorStop(0, `${p.color}${Math.floor(p.opacity * 255).toString(16).padStart(2, "0")}`)
           g.addColorStop(1, `${p.color}00`)
-          ctx.fillStyle = g
-          ctx.beginPath()
-          ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2)
-          ctx.fill()
+          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2); ctx.fill()
         })
       } else if (visualizationType === "waves") {
-        ctx.strokeStyle = "#00d4ff40"
-        ctx.lineWidth = 2
+        ctx.strokeStyle = "#00d4ff40"; ctx.lineWidth = 2
         for (let i = 0; i < 5; i++) {
           ctx.beginPath()
           for (let x = 0; x < canvas.width; x += 5) {
             const y = canvas.height / 2 + Math.sin((x + time * 100 + i * 50) * 0.01) * (50 + i * 20)
-            if (x === 0) ctx.moveTo(x, y)
-            else ctx.lineTo(x, y)
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y)
           }
           ctx.stroke()
         }
@@ -190,18 +163,14 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
           p.x += p.vx
           p.y = canvas.height / 2 + Math.sin((p.x + time * 100) * 0.01) * 100 + (Math.random() - 0.5) * 50
           if (p.x > canvas.width) p.x = -10
-          ctx.beginPath()
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-          ctx.fillStyle = `${p.color}${Math.floor(p.opacity * 255)
-            .toString(16)
-            .padStart(2, "0")}`
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+          ctx.fillStyle = `${p.color}${Math.floor(p.opacity * 255).toString(16).padStart(2, "0")}`
           ctx.fill()
         })
       } else if (visualizationType === "matrix") {
         ctx.fillStyle = "#10b981" // Accent green
         const fontSize = 16
-        const characters =
-          "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン01"
+        const characters = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン01"
         for (let i = 0; i < drops.length; i++) {
           const text = characters.charAt(Math.floor(Math.random() * characters.length))
           ctx.fillText(text, i * fontSize, drops[i] * fontSize)
@@ -212,106 +181,68 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
         }
       } else if (visualizationType === "constellation") {
         particles.forEach((p, i) => {
-          const dxMouse = p.x - mouse.current.x
-          const dyMouse = p.y - mouse.current.y
+          const dxMouse = p.x - mouse.current.x; const dyMouse = p.y - mouse.current.y
           const distMouse = Math.sqrt(dxMouse ** 2 + dyMouse ** 2)
-          if (distMouse < 100) {
-            p.vx += (dxMouse / distMouse) * 0.1
-            p.vy += (dyMouse / distMouse) * 0.1
-          }
-          p.vx *= 0.98
-          p.vy *= 0.98
-          p.x += p.vx
-          p.y += p.vy
+          if (distMouse < 100) { p.vx += dxMouse / distMouse * 0.1; p.vy += dyMouse / distMouse * 0.1 }
+          p.vx *= 0.98; p.vy *= 0.98
+          p.x += p.vx; p.y += p.vy
           if (p.x < 0 || p.x > canvas.width) p.vx *= -1
           if (p.y < 0 || p.y > canvas.height) p.vy *= -1
-          ctx.beginPath()
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-          ctx.fillStyle = p.color
-          ctx.fill()
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fillStyle = p.color; ctx.fill()
           particles.slice(i + 1).forEach((other) => {
             const d = Math.sqrt((p.x - other.x) ** 2 + (p.y - other.y) ** 2)
             if (d < 150) {
-              ctx.beginPath()
-              ctx.moveTo(p.x, p.y)
-              ctx.lineTo(other.x, other.y)
-              ctx.strokeStyle = `rgba(0, 212, 255, ${1 - d / 150})`
-              ctx.lineWidth = 0.3
-              ctx.stroke()
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(other.x, other.y)
+              ctx.strokeStyle = `rgba(0, 212, 255, ${1 - d / 150})`; ctx.lineWidth = 0.3; ctx.stroke()
             }
           })
           if (distMouse < 250) {
-            ctx.beginPath()
-            ctx.moveTo(p.x, p.y)
-            ctx.lineTo(mouse.current.x, mouse.current.y)
-            ctx.strokeStyle = `rgba(124, 58, 237, ${1 - distMouse / 250})`
-            ctx.lineWidth = 0.4
-            ctx.stroke()
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.current.x, mouse.current.y)
+            ctx.strokeStyle = `rgba(124, 58, 237, ${1 - distMouse / 250})`; ctx.lineWidth = 0.4; ctx.stroke()
           }
         })
       } else if (visualizationType === "hyperspace") {
-        const centerX = canvas.width / 2
-        const centerY = canvas.height / 2
-        particles.forEach((p) => {
+        const centerX = canvas.width / 2; const centerY = canvas.height / 2
+        particles.forEach(p => {
           p.z -= p.speed
           if (p.z <= 0) {
             p.x = (Math.random() - 0.5) * canvas.width
             p.y = (Math.random() - 0.5) * canvas.height
             p.z = canvas.width
           }
-          const k = 128.0 / p.z
-          const px = p.x * k + centerX
-          const py = p.y * k + centerY
+          const k = 128.0 / p.z; const px = p.x * k + centerX; const py = p.y * k + centerY
           if (px > 0 && px < canvas.width && py > 0 && py < canvas.height) {
             const size = (1 - p.z / canvas.width) * 4
-            ctx.beginPath()
-            ctx.arc(px, py, size, 0, Math.PI * 2)
-            ctx.fillStyle = p.color
-            ctx.fill()
+            ctx.beginPath(); ctx.arc(px, py, size, 0, Math.PI * 2); ctx.fillStyle = p.color; ctx.fill()
           }
         })
       } else if (visualizationType === "circuit") {
-        particles.forEach((p) => {
-          if (p.direction === "x") p.x += p.speed * p.vx
-          else p.y += p.speed * p.vy
-          ctx.beginPath()
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-          ctx.fillStyle = p.color
-          ctx.shadowColor = p.color
-          ctx.shadowBlur = 10
-          ctx.fill()
-          ctx.shadowBlur = 0
-          p.ttl--
+        particles.forEach(p => {
+          if (p.direction === 'x') p.x += p.speed * p.vx; else p.y += p.speed * p.vy
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+          ctx.fillStyle = p.color; ctx.shadowColor = p.color; ctx.shadowBlur = 10; ctx.fill(); ctx.shadowBlur = 0
+          p.ttl--;
           if (p.ttl <= 0 || p.x > canvas.width || p.x < 0 || p.y > canvas.height || p.y < 0) {
-            p.direction = p.direction === "x" ? "y" : "x"
+            p.direction = p.direction === 'x' ? 'y' : 'x'
             if (p.x > canvas.width || p.x < 0 || p.y > canvas.height || p.y < 0) {
-              p.x = Math.random() * canvas.width
-              p.y = Math.random() * canvas.height
+              p.x = Math.random() * canvas.width; p.y = Math.random() * canvas.height
             }
-            p.vx = Math.random() < 0.5 ? 1 : -1
-            p.vy = Math.random() < 0.5 ? 1 : -1
+            p.vx = Math.random() < 0.5 ? 1 : -1; p.vy = Math.random() < 0.5 ? 1 : -1
             p.ttl = Math.random() * 100 + 50
           }
         })
       } else if (visualizationType === "glitch") {
         particles.forEach((p) => {
-          p.x += p.vx
-          p.y += p.vy
-          p.vx *= 0.98
-          p.vy *= 0.98
+          p.x += p.vx; p.y += p.vy
+          p.vx *= 0.98; p.vy *= 0.98
           if (p.x < 0 || p.x > canvas.width) p.vx *= -1.1
           if (p.y < 0 || p.y > canvas.height) p.vy *= -1.1
-          ctx.beginPath()
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-          ctx.fillStyle = p.color
-          ctx.fill()
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fillStyle = p.color; ctx.fill()
         })
         if (Math.random() > 0.95) {
           for (let i = 0; i < 3; i++) {
-            const x = Math.random() * canvas.width
-            const y = Math.random() * canvas.height
-            const spliceWidth = canvas.width - x
-            const spliceHeight = Math.random() * 20 + 5
+            const x = Math.random() * canvas.width; const y = Math.random() * canvas.height
+            const spliceWidth = canvas.width - x; const spliceHeight = Math.random() * 20 + 5
             ctx.drawImage(canvas, 0, y, spliceWidth, spliceHeight, x, y, spliceWidth, spliceHeight)
             ctx.drawImage(canvas, spliceWidth, y, x, spliceHeight, 0, y, x, spliceHeight)
           }
@@ -330,25 +261,20 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
   // Typewriter effect - unchanged
   useEffect(() => {
     const currentText = texts[currentTextIndex]
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          if (typewriterText.length < currentText.length) {
-            setTypewriterText(currentText.slice(0, typewriterText.length + 1))
-          } else {
-            setTimeout(() => setIsDeleting(true), 2000)
-          }
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        if (typewriterText.length < currentText.length) {
+          setTypewriterText(currentText.slice(0, typewriterText.length + 1))
+        } else { setTimeout(() => setIsDeleting(true), 2000) }
+      } else {
+        if (typewriterText.length > 0) {
+          setTypewriterText(typewriterText.slice(0, -1))
         } else {
-          if (typewriterText.length > 0) {
-            setTypewriterText(typewriterText.slice(0, -1))
-          } else {
-            setIsDeleting(false)
-            setCurrentTextIndex((prev) => (prev + 1) % texts.length)
-          }
+          setIsDeleting(false)
+          setCurrentTextIndex((prev) => (prev + 1) % texts.length)
         }
-      },
-      isDeleting ? 50 : 100,
-    )
+      }
+    }, isDeleting ? 50 : 100)
     return () => clearTimeout(timeout)
   }, [typewriterText, currentTextIndex, isDeleting, texts])
 
@@ -359,24 +285,15 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
   // Updated with new names
   const getVisualizationName = () => {
     switch (visualizationType) {
-      case "neural":
-        return "Neural Network"
-      case "particles":
-        return "Particle Field"
-      case "waves":
-        return "Wave Patterns"
-      case "matrix":
-        return "Digital Rain"
-      case "constellation":
-        return "Interactive Constellation"
-      case "hyperspace":
-        return "Hyperspace Jump"
-      case "circuit":
-        return "Circuit Traces"
-      case "glitch":
-        return "Glitch Field"
-      default:
-        return "Unknown"
+      case "neural": return "Neural Network";
+      case "particles": return "Particle Field";
+      case "waves": return "Wave Patterns";
+      case "matrix": return "Digital Rain";
+      case "constellation": return "Interactive Constellation";
+      case "hyperspace": return "Hyperspace Jump";
+      case "circuit": return "Circuit Traces";
+      case "glitch": return "Glitch Field";
+      default: return "Unknown";
     }
   }
 
@@ -414,7 +331,15 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
           <div className="space-y-4">
             <h1 className="text-5xl md:text-7xl font-bold leading-tight">
               <span className="block text-quantum-light">Hello, I'm</span>
-              <span className="block quantum-gradient-text animate-quantum-float">Biju Damian</span>
+       <span 
+  data-text="Biju Damian"
+  className="relative block bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 bg-clip-text text-transparent font-pacifico text-5xl md:text-7xl text-3d cursor-pointer"
+>
+  Biju Damian
+</span>
+
+
+
             </h1>
             <div className="h-16 flex items-center justify-center">
               <h2 className="text-2xl md:text-3xl font-medium text-quantum-muted">
@@ -424,26 +349,22 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
             </div>
           </div>
           <p className="text-lg md:text-xl text-quantum-muted max-w-3xl mx-auto leading-relaxed text-center">
-            Full-stack dev with a hacker’s curiosity and a creator’s drive. I love turning complex problems into simple,
-            clean, and scalable systems. Exploring the edges of code, design, and innovation.
+            Full-stack dev with a hacker’s curiosity and a creator’s drive. I love turning complex problems into
+            simple, clean, and scalable systems. Exploring the edges of code, design, and innovation.
             <span className="block text-sm mt-2 opacity-60">Current visualization: {getVisualizationName()}</span>
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-quantum-primary to-quantum-secondary hover:opacity-90 text-quantum-dark font-semibold px-8 py-4 rounded-lg transition-all duration-200 shadow-lg shadow-purple-500/30"
+              className="bg-gradient-to-r from-quantum-primary to-quantum-secondary hover:opacity-90 text-quantum-dark font-semibold px-8 py-4 rounded-lg transition-all duration-200 quantum-glow"
               onClick={() => scrollToSection("projects")}
-            >
-              View My Work
-            </Button>
+            >View My Work</Button>
             <Button
               size="lg"
               variant="outline"
               className="border-quantum-primary text-quantum-primary hover:bg-quantum-primary hover:text-quantum-dark px-8 py-4 rounded-lg transition-all duration-200 bg-transparent"
               onClick={() => scrollToSection("contact")}
-            >
-              Get In Touch
-            </Button>
+            >Get In Touch</Button>
           </div>
           <div className="flex justify-center space-x-6 pt-8">
             {[
@@ -456,7 +377,7 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-quantum-card border border-quantum-border flex items-center justify-center text-quantum-muted hover:text-quantum-primary hover:border-quantum-primary transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/30"
+                className="w-12 h-12 rounded-full bg-quantum-card border border-quantum-border flex items-center justify-center text-quantum-muted hover:text-quantum-primary hover:border-quantum-primary transition-all duration-200 hover:quantum-glow"
                 aria-label={label}
               >
                 <Icon size={20} />
@@ -475,10 +396,7 @@ export function HeroSection({ visualizationType }: HeroSectionProps) {
         </div>
       </div>
       <div className="absolute top-20 left-20 w-64 h-64 bg-quantum-primary/10 rounded-full blur-3xl animate-quantum-pulse"></div>
-      <div
-        className="absolute bottom-20 right-20 w-96 h-96 bg-quantum-secondary/10 rounded-full blur-3xl animate-quantum-pulse"
-        style={{ animationDelay: "1s" }}
-      ></div>
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-quantum-secondary/10 rounded-full blur-3xl animate-quantum-pulse" style={{ animationDelay: "1s" }}></div>
       <div className="absolute top-1/2 left-10 w-32 h-32 bg-quantum-accent/10 rounded-full blur-2xl animate-quantum-float"></div>
     </section>
   )

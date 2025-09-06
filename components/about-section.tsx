@@ -51,8 +51,7 @@ export function AboutSection() {
             <span className="quantum-gradient-text">About Me</span>
           </h2>
           <p className="text-xl text-quantum-muted max-w-3xl mx-auto">
-            Curious developer with a passion for building impactful digital solutions. I focus on writing clean,
-            scalable code and crafting experiences that balance performance, design, and usability.
+            Curious developer with a passion for building impactful digital solutions. I focus on writing clean, scalable code and crafting experiences that balance performance, design, and usability.
           </p>
         </div>
 
@@ -62,10 +61,7 @@ export function AboutSection() {
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold text-quantum-light">Building the Future, One Line at a Time</h3>
               <p className="text-quantum-muted leading-relaxed">
-                Building the future one line at a time, I’m a developer who thrives at the intersection of creativity
-                and logic. From crafting sleek frontends to engineering robust backends, I enjoy turning ideas into
-                tangible, impactful products. For me, code isn’t just problem-solving—it’s a way of shaping experiences,
-                simplifying complexity, and leaving a mark on the digital world.
+                Building the future one line at a time, I’m a developer who thrives at the intersection of creativity and logic. From crafting sleek frontends to engineering robust backends, I enjoy turning ideas into tangible, impactful products. For me, code isn’t just problem-solving—it’s a way of shaping experiences, simplifying complexity, and leaving a mark on the digital world.
               </p>
               <p className="text-quantum-muted leading-relaxed">
                 I believe in the power of clean code, beautiful design, and seamless user experiences. Every project is
@@ -95,10 +91,10 @@ export function AboutSection() {
             {highlights.map(({ icon: Icon, title, description }) => (
               <Card
                 key={title}
-                className="p-6 bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/30 group"
+                className="p-6 bg-quantum-card border-quantum-border hover:border-quantum-primary transition-all duration-200 hover:quantum-glow group"
               >
                 <div className="space-y-3">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-quantum-primary/20 to-quantum-secondary/20 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-indigo-500/30 transition-all duration-200">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-quantum-primary/20 to-quantum-secondary/20 flex items-center justify-center group-hover:quantum-glow-secondary transition-all duration-200">
                     <Icon size={24} className="text-quantum-primary" />
                   </div>
                   <h4 className="font-semibold text-quantum-light">{title}</h4>
