@@ -13,6 +13,7 @@ import { Footer } from "@/components/footer"
 import { PerformanceMonitor } from "@/components/performance-monitor"
 import { AccessibilityFeatures } from "@/components/accessibility-features"
 import { LoadingScreen } from "@/components/loading-states"
+import { ScrollProvider } from "@/components/scroll-provider"
 
 const visualizationTypes: VisualizationType[] = ["neural", "particles", "waves", "matrix", "constellation", "hyperspace", "circuit", "glitch"]
 
@@ -34,6 +35,7 @@ export default function HomePage() {
   return (
     <>
       <LoadingScreen />
+      <ScrollProvider /> {/* Added scroll provider for enhanced scrolling */}
       <main className="relative">
         <Navigation onCycleVisualization={cycleVisualization} />
         <HeroSection visualizationType={visualization} />

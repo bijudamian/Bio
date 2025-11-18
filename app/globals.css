@@ -166,61 +166,9 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    /* Replaced with bold diagonal animated gradient background */
-    background: linear-gradient(-45deg, #8b5cf6 0%, #3b82f6 25%, #06b6d4 50%, #3b82f6 75%, #8b5cf6 100%);
-    background-size: 400% 400%;
-    animation: gradient-shift 15s ease infinite;
-    position: relative;
-  }
-
-  /* Added gradient animation keyframes */
-  @keyframes gradient-shift {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  /* Custom cursor styling with glow effect */
-  html {
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16"><circle cx="16" cy="16" r="6" fill="%2300d4ff" opacity="0.8"/><circle cx="16" cy="16" r="4" fill="%2300d4ff"/></svg>')
-      16 16, auto;
-  }
-
-  /* Tooltip styling with modern dark mode aesthetics */
-  [role="tooltip"] {
-    @apply bg-quantum-card text-quantum-light rounded-lg px-3 py-2 text-sm;
-    border: 1px solid rgba(0, 212, 255, 0.2);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 212, 255, 0.1);
-    backdrop-filter: blur(10px);
-    animation: tooltip-fade-in 0.2s ease-out;
-  }
-
-  @keyframes tooltip-fade-in {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Enhanced text selection with purple/cyan gradient effect */
-  ::selection {
-    background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
-    color: #e8e8f0;
-  }
-
-  ::-moz-selection {
-    background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
-    color: #e8e8f0;
+    background-image: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
   }
 
   /* Quantum Scrollbar */
@@ -239,6 +187,12 @@
 
   ::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 212, 255, 0.5);
+  }
+
+  /* Quantum Selection */
+  ::selection {
+    background-color: rgba(0, 212, 255, 0.2);
+    color: #e8e8f0;
   }
 }
 
@@ -348,5 +302,68 @@
 
   .animate-quantum-rotate {
     animation: quantum-rotate 20s linear infinite;
+  }
+  .glass-card {
+    background: rgba(10, 10, 15, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .glass-card:hover {
+    background: rgba(10, 10, 15, 0.2);
+    border-color: rgba(0, 212, 255, 0.2);
+  }
+
+  .glass-light {
+    background: rgba(232, 232, 240, 0.05);
+    backdrop-filter: blur(10px);
+  }
+
+  .glass-border {
+    border-color: rgba(0, 212, 255, 0.1);
+  }
+
+  .shadow-glass {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Smooth scroll for entire page */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, rgba(0, 212, 255, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(0, 212, 255, 0.3) 0%, rgba(124, 58, 237, 0.3) 100%);
+    border-radius: 10px;
+    border: 2px solid rgba(10, 10, 15, 0.3);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(0, 212, 255, 0.5) 0%, rgba(124, 58, 237, 0.5) 100%);
+  }
+
+  ::selection {
+    background: rgba(0, 212, 255, 0.3);
+    color: #e8e8f0;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+  }
+
+  * {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="6" fill="%2300d4ff" opacity="0.6"/><circle cx="16" cy="16" r="10" fill="none" stroke="%2300d4ff" stroke-width="1" opacity="0.3"/></svg>') 16 16, auto;
+  }
+
+  button,
+  a {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="7" fill="%2300d4ff" opacity="0.7"/><circle cx="16" cy="16" r="11" fill="none" stroke="%2300d4ff" stroke-width="1.5" opacity="0.4"/></svg>') 16 16, pointer;
   }
 }
