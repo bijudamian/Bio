@@ -7,7 +7,19 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Github, Linkedin, Twitter, MessageCircle, Zap } from 'lucide-react'
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  CheckCircle,
+  AlertCircle,
+  Github,
+  Linkedin,
+  Twitter,
+  MessageCircle,
+  Zap,
+} from "lucide-react"
 
 interface FormData {
   name: string
@@ -151,31 +163,18 @@ export function ContactSection() {
     setSubmitStatus("idle")
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        }),
-      })
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 2000))
 
-      const data = await response.json()
-
-      if (response.ok) {
+      // Simulate success/error randomly for demo
+      if (Math.random() > 0.2) {
         setSubmitStatus("success")
         setFormData({ name: "", email: "", subject: "", message: "" })
       } else {
         setSubmitStatus("error")
-        console.error("Contact form error:", data)
       }
     } catch (error) {
       setSubmitStatus("error")
-      console.error("Contact form submission error:", error)
     } finally {
       setIsSubmitting(false)
     }
